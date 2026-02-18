@@ -1,0 +1,98 @@
+export const VIBE_CATEGORIES = {
+  COZY_INTIMATE: {
+    label: "Cozy & Intimate",
+    emoji: "🕯️",
+    description: "Warm, quiet, romantic atmosphere perfect for date nights",
+    color: "amber",
+    bgClass: "bg-amber-50 border-amber-200",
+    badgeClass: "bg-amber-100 text-amber-800",
+    iconBg: "bg-amber-100",
+  },
+  LIVELY_ENERGETIC: {
+    label: "Lively & Energetic",
+    emoji: "⚡",
+    description: "Buzzing, loud, social scene where the energy never stops",
+    color: "yellow",
+    bgClass: "bg-yellow-50 border-yellow-200",
+    badgeClass: "bg-yellow-100 text-yellow-800",
+    iconBg: "bg-yellow-100",
+  },
+  UPSCALE_REFINED: {
+    label: "Upscale & Refined",
+    emoji: "✨",
+    description: "Fine dining, sophisticated ambiance, special occasion worthy",
+    color: "purple",
+    bgClass: "bg-purple-50 border-purple-200",
+    badgeClass: "bg-purple-100 text-purple-800",
+    iconBg: "bg-purple-100",
+  },
+  CASUAL_CHILL: {
+    label: "Casual & Chill",
+    emoji: "😎",
+    description: "Relaxed, laid-back, no dress code required",
+    color: "green",
+    bgClass: "bg-green-50 border-green-200",
+    badgeClass: "bg-green-100 text-green-800",
+    iconBg: "bg-green-100",
+  },
+  TRENDY_HIPSTER: {
+    label: "Trendy & Hipster",
+    emoji: "📸",
+    description: "Instagram-worthy, artsy, the cool kids hang here",
+    color: "pink",
+    bgClass: "bg-pink-50 border-pink-200",
+    badgeClass: "bg-pink-100 text-pink-800",
+    iconBg: "bg-pink-100",
+  },
+  FAMILY_FRIENDLY: {
+    label: "Family Friendly",
+    emoji: "👨‍👩‍👧‍👦",
+    description: "Kid-approved, wholesome, everyone's welcome",
+    color: "blue",
+    bgClass: "bg-blue-50 border-blue-200",
+    badgeClass: "bg-blue-100 text-blue-800",
+    iconBg: "bg-blue-100",
+  },
+  SPORTS_BAR: {
+    label: "Sports Bar",
+    emoji: "🏆",
+    description: "Game day central, screens everywhere, rowdy crowd",
+    color: "orange",
+    bgClass: "bg-orange-50 border-orange-200",
+    badgeClass: "bg-orange-100 text-orange-800",
+    iconBg: "bg-orange-100",
+  },
+  DIVE_BAR: {
+    label: "Dive Bar",
+    emoji: "🍺",
+    description: "No-frills, grungy, authentically local character",
+    color: "stone",
+    bgClass: "bg-stone-50 border-stone-200",
+    badgeClass: "bg-stone-100 text-stone-800",
+    iconBg: "bg-stone-100",
+  },
+  ROOFTOP_VIEWS: {
+    label: "Rooftop Vibes",
+    emoji: "🌆",
+    description: "Scenic views, outdoor setting, city skyline magic",
+    color: "sky",
+    bgClass: "bg-sky-50 border-sky-200",
+    badgeClass: "bg-sky-100 text-sky-800",
+    iconBg: "bg-sky-100",
+  },
+  HIDDEN_GEM: {
+    label: "Hidden Gem",
+    emoji: "💎",
+    description: "Underground, local secret, worth hunting down",
+    color: "teal",
+    bgClass: "bg-teal-50 border-teal-200",
+    badgeClass: "bg-teal-100 text-teal-800",
+    iconBg: "bg-teal-100",
+  },
+} as const;
+
+export type VibeCategoryKey = keyof typeof VIBE_CATEGORIES;
+
+export function getVibeCategory(key: string) {
+  return VIBE_CATEGORIES[key as VibeCategoryKey] ?? null;
+}
