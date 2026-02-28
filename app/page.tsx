@@ -1,10 +1,16 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Search, Zap, MapPin, Sparkles } from "lucide-react";
+import dynamic from "next/dynamic";
+import { Search, Zap, MapPin, Sparkles, LayoutGrid, Map } from "lucide-react";
 import { VenueCard } from "@/components/VenueCard";
 import { VIBE_CATEGORIES } from "@/lib/vibeCategories";
 import Link from "next/link";
+
+const MapView = dynamic(
+  () => import("@/components/MapView").then((m) => m.MapView),
+  { ssr: false, loading: () => <div className="rounded-2xl bg-gray-100 animate-pulse" style={{ height: 560 }} /> }
+);
 
 interface Venue {
   id: string;
@@ -13,6 +19,8 @@ interface Venue {
   state: string;
   type: string;
   imageUrl?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
   vibeCategory?: string | null;
   vibeSummary?: string | null;
   vibeScore?: number | null;
@@ -25,6 +33,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [viewMode, setViewMode] = useState<"grid" | "map">("grid");
 
   const fetchVenues = useCallback(async () => {
     setLoading(true);
@@ -128,12 +137,39 @@ export default function HomePage() {
               {loading ? "Loading..." : `${venues.length} venue${venues.length !== 1 ? "s" : ""} found`}
             </p>
           </div>
-          <Link
-            href="/add-venue"
-            className="text-sm text-purple-600 hover:text-purple-700 font-medium"
-          >
-            + Add a venue
-          </Link>
+          <div className="flex items-center gap-3">
+            {/* Grid / Map toggle */}
+            <div className="flex items-center bg-gray-100 rounded-xl p-1 gap-1">
+              <button
+                onClick={() => setViewMode("grid")}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                  viewMode === "grid"
+                    ? "bg-white text-gray-900 shadow-sm"
+                    : "text-gray-500 hover:text-gray-700"
+                }`}
+              >
+                <LayoutGrid size={15} />
+                Grid
+              </button>
+              <button
+                onClick={() => setViewMode("map")}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                  viewMode === "map"
+                    ? "bg-white text-gray-900 shadow-sm"
+                    : "text-gray-500 hover:text-gray-700"
+                }`}
+              >
+                <Map size={15} />
+                Map
+              </button>
+            </div>
+            <Link
+              href="/add-venue"
+              className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+            >
+              + Add a venue
+            </Link>
+          </div>
         </div>
 
         {/* Empty State */}
@@ -155,21 +191,33 @@ export default function HomePage() {
         )}
 
         {/* Venue Grid */}
-        {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div
-                key={i}
-                className="bg-gray-100 rounded-2xl h-48 animate-pulse"
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {venues.map((venue) => (
-              <VenueCard key={venue.id} venue={venue} />
-            ))}
-          </div>
+        {viewMode === "grid" && (
+          loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="bg-gray-100 rounded-2xl h-48 animate-pulse" />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {venues.map((venue) => (
+                <VenueCard key={venue.id} venue={venue} />
+              ))}
+            </div>
+          )
+        )}
+
+        {/* Map View */}
+        {viewMode === "map" && !loading && (
+          <MapView
+            venues={venues.filter(
+              (v): v is typeof v & { latitude: number; longitude: number } =>
+                v.latitude != null && v.longitude != null
+            )}
+          />
+        )}
+        {viewMode === "map" && loading && (
+          <div className="rounded-2xl bg-gray-100 animate-pulse" style={{ height: 560 }} />
         )}
       </section>
 

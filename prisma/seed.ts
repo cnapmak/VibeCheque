@@ -15,6 +15,8 @@ async function main() {
         type: "BAR",
         website: "https://example.com/rusty-anchor",
         imageUrl: "https://images.unsplash.com/photo-1514190051997-0f6f39ca5cde?w=800&q=80",
+        latitude: 30.2615,
+        longitude: -97.7484,
         vibeCategory: "DIVE_BAR",
         vibeSummary:
           "The Rusty Anchor is the kind of bar where everyone knows your name after the second visit. Think sticky floors, dollar bills on the ceiling, a jukebox that still has Led Zeppelin, and bartenders who pour heavy. It's unpretentious, loud, and absolutely perfect for when you want real talk over a cold beer without any Instagram moments.",
@@ -33,6 +35,8 @@ async function main() {
         type: "ROOFTOP",
         website: "https://example.com/celeste",
         imageUrl: "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?w=800&q=80",
+        latitude: 30.2672,
+        longitude: -97.7431,
         vibeCategory: "ROOFTOP_VIEWS",
         vibeSummary:
           "Celeste is the city's open secret for golden hour cocktails with the skyline as your backdrop. The vibe here is equal parts aspirational and accessible — suited crowd mingling with off-duty creatives, all united by the stunning 360-degree views and craft cocktails that justify the price tag. Get there before sunset.",
@@ -50,6 +54,8 @@ async function main() {
         state: "IL",
         type: "RESTAURANT",
         imageUrl: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80",
+        latitude: 41.8827,
+        longitude: -87.6234,
         vibeCategory: "COZY_INTIMATE",
         vibeSummary:
           "Nonna's Table hits you like a warm hug from someone's grandmother. Low lighting, mismatched chairs, checkered tablecloths, and the unmistakable smell of garlic bread from the kitchen. Conversations stay at comfortable volumes, the wine flows freely, and the pasta is made in-house. Perfect for a first date you actually want to go well.",
@@ -67,6 +73,8 @@ async function main() {
         state: "CA",
         type: "LOUNGE",
         imageUrl: "https://images.unsplash.com/photo-1578474846511-04ba529f0b88?w=800&q=80",
+        latitude: 34.0522,
+        longitude: -118.2437,
         vibeCategory: "TRENDY_HIPSTER",
         vibeSummary:
           "If your aesthetic board came to life as a bar, it would look like The Electric Garden. Neon botanicals, curated playlists cycling between indie and electronic, a cocktail menu that changes monthly, and a crowd that all look like they have personal brand deals. The vibe is intentionally crafted — but somehow it works.",
@@ -84,6 +92,8 @@ async function main() {
         state: "TX",
         type: "BAR",
         imageUrl: "https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=800&q=80",
+        latitude: 32.7767,
+        longitude: -96.7970,
         vibeCategory: "SPORTS_BAR",
         vibeSummary:
           "Champions is the temple of game day — 40 screens, a beer list that covers all major domestics, and a crowd that wears their team colors like armor. The nachos are legendary, the noise level peaks at genuinely dangerous decibels during playoffs, and strangers become instant friends or enemies depending on the scoreboard. All-in on sports energy.",
@@ -101,6 +111,8 @@ async function main() {
         state: "WA",
         type: "CAFE",
         imageUrl: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80",
+        latitude: 47.6062,
+        longitude: -122.3321,
         vibeCategory: "CASUAL_CHILL",
         vibeSummary:
           "Momo Café is the antidote to hustle culture. Secondhand furniture, plants everywhere, lo-fi beats at the perfect volume, and baristas who remember your order by week two. The WiFi is fast, the oat milk lattes are exceptional, and nobody rushes you. Whether you're working, reading, or doing absolutely nothing — this is your place.",

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { geocodeAddress } from "@/lib/geocode";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -41,6 +42,13 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const body = await request.json();
 
+  const coords = await geocodeAddress(
+    body.address,
+    body.city,
+    body.state,
+    body.country ?? "US"
+  );
+
   const venue = await prisma.venue.create({
     data: {
       name: body.name,
@@ -51,6 +59,8 @@ export async function POST(request: NextRequest) {
       website: body.website ?? null,
       phone: body.phone ?? null,
       imageUrl: body.imageUrl ?? null,
+      latitude: coords?.latitude ?? null,
+      longitude: coords?.longitude ?? null,
       type: body.type ?? "RESTAURANT",
     },
   });

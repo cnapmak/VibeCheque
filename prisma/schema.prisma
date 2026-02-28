@@ -21,6 +21,8 @@ model Venue {
   website     String?
   phone       String?
   imageUrl    String?
+  latitude    Float?
+  longitude   Float?
   type        String   @default("RESTAURANT")
 
   // AI Vibe Analysis
