@@ -21,33 +21,30 @@ interface MapVenue {
   reviewCount: number;
 }
 
-function createEmojiMarker(emoji: string, color: string) {
+function createPinMarker(color: string) {
   return L.divIcon({
     className: "",
     html: `
       <div style="
-        width:44px;height:44px;border-radius:50% 50% 50% 0;
-        transform:rotate(-45deg);
-        background:${color};
-        border:3px solid white;
-        box-shadow:0 2px 8px rgba(0,0,0,0.3);
-        display:flex;align-items:center;justify-content:center;
-      ">
-        <span style="transform:rotate(45deg);font-size:20px;line-height:1">${emoji}</span>
-      </div>`,
-    iconSize: [44, 44],
-    iconAnchor: [22, 44],
-    popupAnchor: [0, -48],
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: ${color};
+        border: 2.5px solid white;
+        box-shadow: 0 1px 6px rgba(0,0,0,0.35);
+      "></div>`,
+    iconSize: [14, 14],
+    iconAnchor: [7, 7],
+    popupAnchor: [0, -12],
   });
 }
 
-// Fit map bounds to all venue markers
 function BoundsFitter({ venues }: { venues: MapVenue[] }) {
   const map = useMap();
   useEffect(() => {
     if (!venues.length) return;
     const bounds = L.latLngBounds(venues.map((v) => [v.latitude, v.longitude]));
-    map.fitBounds(bounds, { padding: [60, 60], maxZoom: 13 });
+    map.fitBounds(bounds, { padding: [60, 60], maxZoom: 14 });
   }, [map, venues]);
   return null;
 }
@@ -58,25 +55,12 @@ const VENUE_TYPE_LABELS: Record<string, string> = {
   WINERY: "Winery", FOOD_HALL: "Food Hall", OTHER: "Venue",
 };
 
-const CATEGORY_COLORS: Record<string, string> = {
-  COZY_INTIMATE: "#f59e0b",
-  LIVELY_ENERGETIC: "#eab308",
-  UPSCALE_REFINED: "#a855f7",
-  CASUAL_CHILL: "#22c55e",
-  TRENDY_HIPSTER: "#ec4899",
-  FAMILY_FRIENDLY: "#3b82f6",
-  SPORTS_BAR: "#f97316",
-  DIVE_BAR: "#78716c",
-  ROOFTOP_VIEWS: "#0ea5e9",
-  HIDDEN_GEM: "#14b8a6",
-};
-
 export function MapView({ venues }: { venues: MapVenue[] }) {
   return (
-    <div className="rounded-2xl overflow-hidden border-2 border-gray-200 shadow-sm" style={{ height: 560 }}>
+    <div className="rounded-2xl overflow-hidden border border-gray-200 shadow-sm" style={{ height: 560 }}>
       <MapContainer
-        center={[39.5, -98.35]}
-        zoom={4}
+        center={[41.9, -87.65]}
+        zoom={12}
         style={{ height: "100%", width: "100%" }}
         zoomControl={true}
       >
@@ -87,32 +71,42 @@ export function MapView({ venues }: { venues: MapVenue[] }) {
         <BoundsFitter venues={venues} />
         {venues.map((venue) => {
           const vibe = venue.vibeCategory ? getVibeCategory(venue.vibeCategory) : null;
-          const emoji = vibe?.emoji ?? "📍";
-          const color = venue.vibeCategory ? (CATEGORY_COLORS[venue.vibeCategory] ?? "#7c3aed") : "#7c3aed";
-          const icon = createEmojiMarker(emoji, color);
+          const color = vibe?.mapColor ?? "#6d28d9";
+          const icon = createPinMarker(color);
           const score = venue.avgUserVibeScore ?? venue.vibeScore;
 
           return (
             <Marker key={venue.id} position={[venue.latitude, venue.longitude]} icon={icon}>
-              <Popup minWidth={200}>
-                <div className="p-1">
-                  <p className="font-bold text-gray-900 text-sm leading-tight mb-0.5">{venue.name}</p>
-                  <p className="text-xs text-gray-500 mb-1">
-                    {VENUE_TYPE_LABELS[venue.type] ?? venue.type} · {venue.city}, {venue.state}
+              <Popup minWidth={200} maxWidth={240}>
+                <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", padding: "4px 2px" }}>
+                  <p style={{ fontWeight: 700, fontSize: 13, color: "#111", marginBottom: 2, lineHeight: 1.3 }}>{venue.name}</p>
+                  <p style={{ fontSize: 11, color: "#9ca3af", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.04em", fontWeight: 500 }}>
+                    {VENUE_TYPE_LABELS[venue.type] ?? venue.type} — {venue.city}
                   </p>
                   {vibe && (
-                    <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-700 mb-1">
-                      {vibe.emoji} {vibe.label}
+                    <span style={{
+                      display: "inline-flex", alignItems: "center", gap: 5,
+                      fontSize: 11, fontWeight: 600, color: vibe.accent,
+                      marginBottom: 6,
+                    }}>
+                      <span style={{ width: 6, height: 6, borderRadius: "50%", background: vibe.mapColor, display: "inline-block" }} />
+                      {vibe.label}
                     </span>
                   )}
                   {score != null && (
-                    <p className="text-xs text-gray-600">⭐ {score.toFixed(1)} · {venue.reviewCount} review{venue.reviewCount !== 1 ? "s" : ""}</p>
+                    <p style={{ fontSize: 11, color: "#6b7280", marginBottom: 8 }}>
+                      {score.toFixed(1)} avg · {venue.reviewCount} review{venue.reviewCount !== 1 ? "s" : ""}
+                    </p>
                   )}
                   <Link
                     href={`/venue/${venue.id}`}
-                    className="block mt-2 text-center text-xs font-semibold text-purple-600 hover:text-purple-700 border border-purple-200 rounded-lg py-1 px-2 hover:bg-purple-50 transition-colors"
+                    style={{
+                      display: "block", textAlign: "center", fontSize: 12,
+                      fontWeight: 600, color: "#7c3aed", textDecoration: "none",
+                      border: "1px solid #ddd6fe", borderRadius: 8, padding: "5px 10px",
+                    }}
                   >
-                    View venue →
+                    View venue
                   </Link>
                 </div>
               </Popup>

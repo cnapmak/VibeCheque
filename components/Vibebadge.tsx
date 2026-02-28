@@ -12,18 +12,24 @@ export function VibeBadge({ category, size = "md" }: VibeBadgeProps) {
   if (!vibe) return null;
 
   const sizeClasses = {
-    sm: "text-xs px-2 py-0.5",
-    md: "text-sm px-3 py-1",
-    lg: "text-base px-4 py-2",
+    sm: "text-xs px-2.5 py-0.5 gap-1.5",
+    md: "text-sm px-3 py-1 gap-2",
+    lg: "text-sm px-4 py-1.5 gap-2",
   };
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full font-medium border ${vibe.badgeClass} ${sizeClasses[size]}`}
-      style={{ borderColor: "currentColor", borderWidth: "1px", opacity: 0.9 }}
+      className={`inline-flex items-center rounded-full font-medium border ${vibe.badgeClass} ${sizeClasses[size]}`}
     >
-      <span>{vibe.emoji}</span>
-      <span>{vibe.label}</span>
+      <span
+        className="rounded-full flex-shrink-0"
+        style={{
+          width: size === "lg" ? 7 : 6,
+          height: size === "lg" ? 7 : 6,
+          background: vibe.accent,
+        }}
+      />
+      {vibe.label}
     </span>
   );
 }

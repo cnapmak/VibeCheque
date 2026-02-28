@@ -2,22 +2,24 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { MapPin, Globe, Image, Loader2, Sparkles } from "lucide-react";
+import { MapPin, Globe, Image, Loader2, Sparkles, ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 
 const VENUE_TYPES = [
-  { value: "RESTAURANT", label: "Restaurant", emoji: "🍽️" },
-  { value: "BAR", label: "Bar", emoji: "🍸" },
-  { value: "CAFE", label: "Café", emoji: "☕" },
-  { value: "LOUNGE", label: "Lounge", emoji: "🛋️" },
-  { value: "CLUB", label: "Nightclub", emoji: "🎵" },
-  { value: "ROOFTOP", label: "Rooftop", emoji: "🌆" },
-  { value: "BREWERY", label: "Brewery", emoji: "🍺" },
-  { value: "WINERY", label: "Winery", emoji: "🍷" },
-  { value: "FOOD_HALL", label: "Food Hall", emoji: "🏪" },
-  { value: "OTHER", label: "Other", emoji: "📍" },
+  { value: "RESTAURANT", label: "Restaurant" },
+  { value: "BAR", label: "Bar" },
+  { value: "CAFE", label: "Café" },
+  { value: "LOUNGE", label: "Lounge" },
+  { value: "CLUB", label: "Nightclub" },
+  { value: "ROOFTOP", label: "Rooftop" },
+  { value: "BREWERY", label: "Brewery" },
+  { value: "WINERY", label: "Winery" },
+  { value: "FOOD_HALL", label: "Food Hall" },
+  { value: "OTHER", label: "Other" },
 ];
+
+const INPUT_CLASS =
+  "w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-100 transition-colors";
 
 export default function AddVenuePage() {
   const router = useRouter();
@@ -64,12 +66,9 @@ export default function AddVenuePage() {
       }
 
       const venue = await res.json();
-
-      // Run AI analysis if requested
       if (formData.runAnalysis) {
         await fetch(`/api/venues/${venue.id}/analyze`, { method: "POST" });
       }
-
       router.push(`/venue/${venue.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
@@ -78,42 +77,41 @@ export default function AddVenuePage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
+    <div className="max-w-2xl mx-auto px-4 py-10">
       <Link
         href="/"
-        className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-purple-600 mb-6 transition-colors"
+        className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-400 hover:text-gray-700 mb-8 tracking-wide uppercase transition-colors"
       >
-        <ArrowLeft size={16} />
-        Back to discovery
+        <ArrowLeft size={14} />
+        Back
       </Link>
 
-      <div className="mb-8">
-        <h1 className="text-3xl font-black text-gray-900 mb-2">Add a Venue</h1>
-        <p className="text-gray-500">
-          Add a restaurant or bar to get an AI vibe check and community reviews.
+      <div className="mb-10">
+        <h1 className="text-3xl font-black text-gray-900 tracking-tight mb-2">Add a Venue</h1>
+        <p className="text-sm text-gray-400">
+          Add a restaurant or bar to get an AI vibe analysis and community reviews.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-6">
         {/* Venue Type */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
-            Venue Type *
+          <label className="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
+            Venue Type
           </label>
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+          <div className="flex flex-wrap gap-2">
             {VENUE_TYPES.map((type) => (
               <button
                 key={type.value}
                 type="button"
                 onClick={() => setFormData((p) => ({ ...p, type: type.value }))}
-                className={`flex flex-col items-center gap-1 p-3 rounded-xl border-2 text-xs font-medium transition-all ${
+                className={`px-4 py-2 rounded-xl text-xs font-semibold border transition-all ${
                   formData.type === type.value
-                    ? "border-purple-500 bg-purple-50 text-purple-700"
-                    : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+                    ? "bg-gray-900 text-white border-gray-900"
+                    : "bg-white text-gray-500 border-gray-200 hover:border-gray-400"
                 }`}
               >
-                <span className="text-xl">{type.emoji}</span>
-                <span>{type.label}</span>
+                {type.label}
               </button>
             ))}
           </div>
@@ -121,7 +119,7 @@ export default function AddVenuePage() {
 
         {/* Name */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
+          <label className="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">
             Venue Name *
           </label>
           <input
@@ -129,16 +127,16 @@ export default function AddVenuePage() {
             required
             value={formData.name}
             onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
-            placeholder="e.g. The Rusty Anchor Bar"
-            className="w-full rounded-xl border-2 border-gray-200 px-4 py-2.5 text-sm focus:border-purple-400 focus:outline-none transition-colors"
+            placeholder="e.g. The Violet Hour"
+            className={INPUT_CLASS}
           />
         </div>
 
         {/* Address */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
+          <label className="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">
             <span className="flex items-center gap-1.5">
-              <MapPin size={14} />
+              <MapPin size={12} />
               Street Address *
             </span>
           </label>
@@ -147,52 +145,52 @@ export default function AddVenuePage() {
             required
             value={formData.address}
             onChange={(e) => setFormData((p) => ({ ...p, address: e.target.value }))}
-            placeholder="e.g. 123 Main Street"
-            className="w-full rounded-xl border-2 border-gray-200 px-4 py-2.5 text-sm focus:border-purple-400 focus:outline-none transition-colors"
+            placeholder="e.g. 1520 N Damen Ave"
+            className={INPUT_CLASS}
           />
         </div>
 
         {/* City / State / Country */}
         <div className="grid grid-cols-3 gap-3">
-          <div className="col-span-1">
-            <label className="block text-sm font-semibold text-gray-700 mb-1">City *</label>
+          <div>
+            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">City *</label>
             <input
               type="text"
               required
               value={formData.city}
               onChange={(e) => setFormData((p) => ({ ...p, city: e.target.value }))}
-              placeholder="e.g. Austin"
-              className="w-full rounded-xl border-2 border-gray-200 px-4 py-2.5 text-sm focus:border-purple-400 focus:outline-none transition-colors"
+              placeholder="Chicago"
+              className={INPUT_CLASS}
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">State *</label>
+            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">State *</label>
             <input
               type="text"
               required
               value={formData.state}
               onChange={(e) => setFormData((p) => ({ ...p, state: e.target.value }))}
-              placeholder="TX"
-              className="w-full rounded-xl border-2 border-gray-200 px-4 py-2.5 text-sm focus:border-purple-400 focus:outline-none transition-colors"
+              placeholder="IL"
+              className={INPUT_CLASS}
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Country</label>
+            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">Country</label>
             <input
               type="text"
               value={formData.country}
               onChange={(e) => setFormData((p) => ({ ...p, country: e.target.value }))}
-              className="w-full rounded-xl border-2 border-gray-200 px-4 py-2.5 text-sm focus:border-purple-400 focus:outline-none transition-colors"
+              className={INPUT_CLASS}
             />
           </div>
         </div>
 
         {/* Website */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
+          <label className="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">
             <span className="flex items-center gap-1.5">
-              <Globe size={14} />
-              Website <span className="font-normal text-gray-400">(optional — helps AI analyze better)</span>
+              <Globe size={12} />
+              Website <span className="font-normal normal-case text-gray-400">(helps AI analyze)</span>
             </span>
           </label>
           <input
@@ -200,16 +198,16 @@ export default function AddVenuePage() {
             value={formData.website}
             onChange={(e) => setFormData((p) => ({ ...p, website: e.target.value }))}
             placeholder="https://example.com"
-            className="w-full rounded-xl border-2 border-gray-200 px-4 py-2.5 text-sm focus:border-purple-400 focus:outline-none transition-colors"
+            className={INPUT_CLASS}
           />
         </div>
 
         {/* Image URL */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
+          <label className="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">
             <span className="flex items-center gap-1.5">
-              <Image size={14} />
-              Cover Photo URL <span className="font-normal text-gray-400">(optional)</span>
+              <Image size={12} />
+              Cover Photo URL <span className="font-normal normal-case text-gray-400">(optional)</span>
             </span>
           </label>
           <input
@@ -217,10 +215,10 @@ export default function AddVenuePage() {
             value={formData.imageUrl}
             onChange={(e) => setFormData((p) => ({ ...p, imageUrl: e.target.value }))}
             placeholder="https://example.com/photo.jpg"
-            className="w-full rounded-xl border-2 border-gray-200 px-4 py-2.5 text-sm focus:border-purple-400 focus:outline-none transition-colors"
+            className={INPUT_CLASS}
           />
           {formData.imageUrl && (
-            <div className="mt-2 rounded-xl overflow-hidden h-40 border-2 border-gray-100">
+            <div className="mt-3 rounded-xl overflow-hidden h-44 border border-gray-100">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={formData.imageUrl}
@@ -232,25 +230,25 @@ export default function AddVenuePage() {
           )}
         </div>
 
-        {/* AI Analysis Toggle */}
-        <div className="bg-purple-50 border-2 border-purple-100 rounded-2xl p-4">
+        {/* AI Toggle */}
+        <div className="bg-violet-50 border border-violet-100 rounded-2xl p-5">
           <label className="flex items-start gap-3 cursor-pointer">
             <input
               type="checkbox"
               checked={formData.runAnalysis}
               onChange={(e) => setFormData((p) => ({ ...p, runAnalysis: e.target.checked }))}
-              className="mt-0.5 w-4 h-4 rounded accent-purple-600"
+              className="mt-0.5 w-4 h-4 accent-violet-600"
             />
             <div>
-              <div className="flex items-center gap-2">
-                <Sparkles size={14} className="text-purple-500" />
-                <span className="font-semibold text-purple-900 text-sm">
-                  Run AI Vibe Analysis after adding
+              <div className="flex items-center gap-2 mb-1">
+                <Sparkles size={13} className="text-violet-500" />
+                <span className="font-semibold text-violet-900 text-sm">
+                  Run AI vibe analysis after adding
                 </span>
               </div>
-              <p className="text-xs text-purple-600 mt-0.5">
-                Our AI will analyze this venue and assign it a vibe category and summary.
-                Requires ANTHROPIC_API_KEY to be set.
+              <p className="text-xs text-violet-500/80">
+                Claude will analyze the venue and assign a vibe category, score, and summary.
+                Requires ANTHROPIC_API_KEY.
               </p>
             </div>
           </label>
@@ -265,16 +263,16 @@ export default function AddVenuePage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-bold py-4 px-6 rounded-2xl hover:from-purple-700 hover:to-pink-600 disabled:opacity-60 transition-all text-base shadow-lg"
+          className="w-full flex items-center justify-center gap-2 bg-gray-900 text-white font-bold py-3.5 px-6 rounded-xl hover:bg-gray-700 disabled:opacity-50 transition-colors text-sm"
         >
           {loading ? (
             <>
-              <Loader2 size={20} className="animate-spin" />
-              {formData.runAnalysis ? "Adding & Analyzing Vibe..." : "Adding Venue..."}
+              <Loader2 size={16} className="animate-spin" />
+              {formData.runAnalysis ? "Adding & analyzing..." : "Adding venue..."}
             </>
           ) : (
             <>
-              <MapPin size={20} />
+              <MapPin size={16} />
               Add Venue to VibeCheque
             </>
           )}
