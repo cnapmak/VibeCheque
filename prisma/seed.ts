@@ -222,6 +222,30 @@ async function main() {
       },
     }),
 
+    // ── RIVER NORTH ───────────────────────────────────────────────────────────
+
+    prisma.venue.create({
+      data: {
+        name: "Erie Cafe",
+        address: "536 W Erie St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.eriecafe.com",
+        phone: "312-266-2300",
+        type: "RESTAURANT",
+        imageUrl: "https://dottie.enjoyillinois.com/assets/Tourism-Operators/images/itims/25906_823eeb2ed27c70a62908850966481ae1_featured_v2__FocusFillWyIwLjAwIiwiMC4wMCIsMTIwMCw5MDBd.jpg",
+        latitude: 41.8942,
+        longitude: -87.6395,
+        vibeCategory: "UPSCALE_REFINED",
+        vibeSummary:
+          "Erie Cafe has anchored River North since 1994 in a converted meat-packing plant that still wears its bones proudly — cedar ceiling, exposed brick, oil paintings, and a clubhouse hush that the room earns rather than performs. The prime steaks are butchered in-house from whole primal cuts and the martinis are serious. Third-generation family-owned and entirely unchanged by trends. The riverside patio in summer is one of the neighborhood's best-kept secrets.",
+        vibeScore: 8.9,
+        avgUserVibeScore: 4.7,
+        reviewCount: 2,
+      },
+    }),
+
     // ── GOLD COAST ────────────────────────────────────────────────────────────
 
     prisma.venue.create({
@@ -289,7 +313,7 @@ async function main() {
   ]);
 
   // Reviews
-  const [lula, mitocaya, billySunday, bestIntentions, schwa, nicks, piece, alinea, northPond, gejas, sparrow, luxbar, pandan] = venues;
+  const [lula, mitocaya, billySunday, bestIntentions, schwa, nicks, piece, alinea, northPond, gejas, erieCafe, sparrow, luxbar, pandan] = venues;
 
   await prisma.review.createMany({
     data: [
@@ -476,6 +500,25 @@ async function main() {
         downvotes: 1,
       },
 
+      // Erie Cafe
+      {
+        venueId: erieCafe.id,
+        authorName: "Patrick H.",
+        vibeRating: 5,
+        vibeCategory: "UPSCALE_REFINED",
+        comment: "The kind of steakhouse Chicago does better than anywhere else. Cedar ceiling, brick walls, white tablecloths — it's exactly what it should be and has been for thirty years. The ribeye is perfect, the service is polished, and the riverfront patio in summer is an absolute revelation.",
+        upvotes: 34,
+        downvotes: 0,
+      },
+      {
+        venueId: erieCafe.id,
+        authorName: "Carol M.",
+        vibeRating: 5,
+        comment: "Third-generation family-owned and you feel it immediately — the servers know their regulars, the menu doesn't chase trends, and the quality is completely consistent. This is what a classic Chicago steakhouse should be.",
+        upvotes: 18,
+        downvotes: 0,
+      },
+
       // Sparrow
       {
         venueId: sparrow.id,
@@ -535,7 +578,7 @@ async function main() {
     ],
   });
 
-  console.log(`Seeded ${venues.length} Chicago venues with reviews!`);
+  console.log(`Seeded ${venues.length} Chicago venues with reviews!`); // 14 venues
 }
 
 main()
