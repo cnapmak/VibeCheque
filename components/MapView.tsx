@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import L from "leaflet";
-import type { Map as LeafletMap, Marker as LeafletMarker } from "leaflet";
 import { getVibeCategory } from "@/lib/vibeCategories";
 import "leaflet/dist/leaflet.css";
 
@@ -37,13 +36,9 @@ function pinIconHtml(color: string): string {
 
 export function MapView({ venues }: { venues: MapVenue[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<LeafletMap | null>(null);
-  const markersRef = useRef<LeafletMarker[]>([]);
-  const [isReady, setIsReady] = useState(false);
 
-  // ── Initialize Leaflet map (once) ─────────────────────────────────────────
   useEffect(() => {
-    if (!containerRef.current || mapRef.current) return;
+    if (!containerRef.current) return;
 
     const map = L.map(containerRef.current, {
       center: [41.9, -87.65],
@@ -53,32 +48,9 @@ export function MapView({ venues }: { venues: MapVenue[] }) {
     });
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       maxZoom: 19,
     }).addTo(map);
-
-    mapRef.current = map;
-    setIsReady(true);
-
-    return () => {
-      map.remove();
-      mapRef.current = null;
-      markersRef.current = [];
-      setIsReady(false); // reset so second mount (React Strict Mode) re-triggers marker effect
-    };
-  }, []);
-
-  // ── Add / refresh markers whenever venues change ───────────────────────────
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!isReady || !map) return;
-
-    // Remove old markers
-    markersRef.current.forEach((m) => m.remove());
-    markersRef.current = [];
-
-    const newMarkers: LeafletMarker[] = [];
 
     venues.forEach((venue) => {
       const vibe = venue.vibeCategory ? getVibeCategory(venue.vibeCategory) : null;
@@ -88,10 +60,10 @@ export function MapView({ venues }: { venues: MapVenue[] }) {
 
       const icon = L.divIcon({
         html: pinIconHtml(color),
-        className: "",          // suppress default leaflet-div-icon white-box style
-        iconSize: [28, 38] as [number, number],
-        iconAnchor: [14, 38] as [number, number],
-        popupAnchor: [0, -40] as [number, number],
+        className: "",
+        iconSize: [28, 38],
+        iconAnchor: [14, 38],
+        popupAnchor: [0, -40],
       });
 
       const popupHtml = `
@@ -100,32 +72,23 @@ export function MapView({ venues }: { venues: MapVenue[] }) {
           <p style="margin:0 0 6px;font-size:11px;color:#9ca3af;text-transform:uppercase;letter-spacing:0.04em;font-weight:500">${typeLabel}</p>
           ${vibe ? `<p style="margin:0 0 6px;font-size:11px;font-weight:600;color:${vibe.accent}">${vibe.label}</p>` : ""}
           ${score != null ? `<p style="margin:0 0 10px;font-size:11px;color:#6b7280">${score.toFixed(1)} avg &middot; ${venue.reviewCount} review${venue.reviewCount !== 1 ? "s" : ""}</p>` : ""}
-          <a
-            href="/venue/${venue.id}"
-            style="display:block;text-align:center;font-size:12px;font-weight:600;color:#7c3aed;text-decoration:none;border:1px solid #ddd6fe;border-radius:8px;padding:6px 10px;background:#faf5ff"
-          >View venue &rarr;</a>
+          <a href="/venue/${venue.id}" style="display:block;text-align:center;font-size:12px;font-weight:600;color:#7c3aed;text-decoration:none;border:1px solid #ddd6fe;border-radius:8px;padding:6px 10px;background:#faf5ff">View venue &rarr;</a>
         </div>`;
 
-      const marker = L.marker(
-        L.latLng(venue.latitude, venue.longitude),
-        { icon }
-      )
+      L.marker(L.latLng(venue.latitude, venue.longitude), { icon })
         .addTo(map)
         .bindPopup(popupHtml, { minWidth: 200, maxWidth: 250 });
-
-      newMarkers.push(marker);
     });
 
-    markersRef.current = newMarkers;
-
-    // Fit map to show all visible markers
     if (venues.length > 0) {
-      const bounds = L.latLngBounds(
-        venues.map((v) => L.latLng(v.latitude, v.longitude))
-      );
+      const bounds = L.latLngBounds(venues.map((v) => L.latLng(v.latitude, v.longitude)));
       map.fitBounds(bounds, { padding: [60, 60], maxZoom: 14 });
     }
-  }, [isReady, venues]);
+
+    return () => {
+      map.remove();
+    };
+  }, [venues]);
 
   return (
     <div

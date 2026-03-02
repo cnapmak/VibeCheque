@@ -115,7 +115,7 @@ export function ReviewForm({ venueId, onSubmit }: ReviewFormProps) {
           <option value="">Pick the vibe that fits...</option>
           {Object.entries(VIBE_CATEGORIES).map(([key, val]) => (
             <option key={key} value={key}>
-              {val.emoji} {val.label}
+              {val.label}
             </option>
           ))}
         </select>
