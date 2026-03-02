@@ -23,7 +23,8 @@ model Venue {
   imageUrl    String?
   latitude    Float?
   longitude   Float?
-  type        String   @default("RESTAURANT")
+  type          String   @default("RESTAURANT")
+  neighborhood  String?
 
   // AI Vibe Analysis
   vibeCategory  String?

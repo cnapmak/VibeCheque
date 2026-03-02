@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { VibeBadge } from "@/components/Vibebadge";
+import { VenueCard } from "@/components/VenueCard";
 import { ReviewCard } from "@/components/ReviewCard";
 import { ReviewForm } from "@/components/ReviewForm";
 import { StarRating } from "@/components/StarRating";
@@ -22,6 +23,22 @@ interface Review {
   upvotes: number;
   downvotes: number;
   createdAt: string;
+}
+
+interface SimilarVenue {
+  id: string;
+  name: string;
+  city: string;
+  state: string;
+  type: string;
+  imageUrl?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  vibeCategory?: string | null;
+  vibeSummary?: string | null;
+  vibeScore?: number | null;
+  avgUserVibeScore?: number | null;
+  reviewCount: number;
 }
 
 interface Venue {
@@ -57,10 +74,21 @@ export default function VenuePage() {
   const [analyzing, setAnalyzing] = useState(false);
   const [analyzeError, setAnalyzeError] = useState<string | null>(null);
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const [similarVenues, setSimilarVenues] = useState<SimilarVenue[]>([]);
 
   const fetchVenue = useCallback(async () => {
     const res = await fetch(`/api/venues/${id}`);
-    if (res.ok) setVenue(await res.json());
+    if (res.ok) {
+      const data: Venue = await res.json();
+      setVenue(data);
+      if (data.vibeCategory) {
+        const simRes = await fetch(`/api/venues?category=${data.vibeCategory}&limit=4`);
+        if (simRes.ok) {
+          const simData: SimilarVenue[] = await simRes.json();
+          setSimilarVenues(simData.filter((v) => v.id !== data.id).slice(0, 3));
+        }
+      }
+    }
     setLoading(false);
   }, [id]);
 
@@ -284,7 +312,7 @@ export default function VenuePage() {
 
       {/* Rating Breakdown */}
       {venue.reviews.length > 0 && (
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-5">
           <h3 className="font-bold text-sm text-gray-900 mb-4 flex items-center gap-2 tracking-tight">
             <Star size={14} className="text-amber-400 fill-amber-400" />
             Rating Breakdown
@@ -308,6 +336,21 @@ export default function VenuePage() {
                 </div>
               );
             })}
+          </div>
+        </div>
+      )}
+
+      {/* Similar Vibes */}
+      {similarVenues.length > 0 && (
+        <div className="mb-5">
+          <h3 className="font-bold text-sm text-gray-900 mb-4 flex items-center gap-2 tracking-tight">
+            <Sparkles size={14} className="text-violet-500" />
+            Similar Vibes
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {similarVenues.map((v) => (
+              <VenueCard key={v.id} venue={v} />
+            ))}
           </div>
         </div>
       )}

@@ -25,3 +25,17 @@ body {
   display: inline-flex;
   gap: 2px;
 }
+
+/* Leaflet + Tailwind v4 compatibility
+   Tailwind's preflight can apply max-width:100% to all <img> elements,
+   which breaks Leaflet tile rendering. Belt-and-suspenders guard here
+   in addition to Leaflet's own !important rule. */
+.leaflet-container img {
+  max-width: none !important;
+  max-height: none !important;
+}
+/* Ensure the map container renders at full height */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+}

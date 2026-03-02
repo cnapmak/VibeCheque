@@ -31,24 +31,50 @@ interface Venue {
   reviewCount: number;
 }
 
+const NEIGHBORHOODS = ["Ukrainian Village", "Logan Square", "Avondale", "Wicker Park", "Lincoln Park", "River North", "Gold Coast"];
+const VENUE_TYPES = ["RESTAURANT", "BAR", "BREWERY", "CAFE", "LOUNGE", "ROOFTOP", "OTHER"];
+const VENUE_TYPE_LABELS: Record<string, string> = {
+  RESTAURANT: "Restaurant", BAR: "Bar", BREWERY: "Brewery", CAFE: "Café",
+  LOUNGE: "Lounge", ROOFTOP: "Rooftop", OTHER: "Other",
+};
+const SORT_OPTIONS = [
+  { value: "newest", label: "Newest" },
+  { value: "score", label: "AI Score" },
+  { value: "community", label: "Community" },
+  { value: "popular", label: "Popular" },
+];
+
 export default function HomePage() {
   const [venues, setVenues] = useState<Venue[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedNeighborhood, setSelectedNeighborhood] = useState("");
+  const [selectedType, setSelectedType] = useState("");
+  const [sortBy, setSortBy] = useState("newest");
   const [viewMode, setViewMode] = useState<"grid" | "map">("grid");
 
   const fetchVenues = useCallback(async () => {
     setLoading(true);
-    const params = new URLSearchParams();
-    if (searchQuery) params.set("q", searchQuery);
-    if (selectedCategory) params.set("category", selectedCategory);
+    try {
+      const params = new URLSearchParams();
+      if (searchQuery) params.set("q", searchQuery);
+      if (selectedCategory) params.set("category", selectedCategory);
+      if (selectedNeighborhood) params.set("neighborhood", selectedNeighborhood);
+      if (selectedType) params.set("type", selectedType);
+      if (sortBy !== "newest") params.set("sort", sortBy);
 
-    const res = await fetch(`/api/venues?${params}`);
-    const data = await res.json();
-    setVenues(data);
-    setLoading(false);
-  }, [searchQuery, selectedCategory]);
+      const res = await fetch(`/api/venues?${params}`);
+      if (!res.ok) throw new Error(`API error ${res.status}`);
+      const data = await res.json();
+      setVenues(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Failed to fetch venues:", err);
+      setVenues([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [searchQuery, selectedCategory, selectedNeighborhood, selectedType, sortBy]);
 
   useEffect(() => {
     const timeout = setTimeout(fetchVenues, 300);
@@ -89,41 +115,107 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Category Filter */}
+      {/* Filter Bar */}
       <section className="bg-white border-b border-gray-200 sticky top-[60px] z-40">
-        <div className="max-w-6xl mx-auto px-4 py-3 overflow-x-auto">
-          <div className="flex items-center gap-2 min-w-max">
-            <button
-              onClick={() => setSelectedCategory("")}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all whitespace-nowrap ${
-                selectedCategory === ""
-                  ? "bg-gray-900 text-white"
-                  : "bg-gray-100 text-gray-500 hover:bg-gray-200"
-              }`}
-            >
-              All
-            </button>
-            {Object.entries(VIBE_CATEGORIES).map(([key, cat]) => (
+        <div className="max-w-6xl mx-auto px-4 py-3 space-y-2">
+          {/* Vibe Category row */}
+          <div className="overflow-x-auto">
+            <div className="flex items-center gap-2 min-w-max">
               <button
-                key={key}
-                onClick={() => setSelectedCategory(selectedCategory === key ? "" : key)}
-                className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all whitespace-nowrap border ${
-                  selectedCategory === key
-                    ? "bg-gray-900 text-white border-gray-900"
-                    : `${cat.badgeClass} hover:opacity-80`
+                onClick={() => setSelectedCategory("")}
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all whitespace-nowrap ${
+                  selectedCategory === ""
+                    ? "bg-gray-900 text-white"
+                    : "bg-gray-100 text-gray-500 hover:bg-gray-200"
                 }`}
               >
-                <span
-                  className="rounded-full flex-shrink-0"
-                  style={{
-                    width: 6,
-                    height: 6,
-                    background: selectedCategory === key ? "white" : cat.accent,
-                  }}
-                />
-                {cat.label}
+                All
               </button>
-            ))}
+              {Object.entries(VIBE_CATEGORIES).map(([key, cat]) => (
+                <button
+                  key={key}
+                  onClick={() => setSelectedCategory(selectedCategory === key ? "" : key)}
+                  className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all whitespace-nowrap border ${
+                    selectedCategory === key
+                      ? "bg-gray-900 text-white border-gray-900"
+                      : `${cat.badgeClass} hover:opacity-80`
+                  }`}
+                >
+                  <span
+                    className="rounded-full flex-shrink-0"
+                    style={{
+                      width: 6,
+                      height: 6,
+                      background: selectedCategory === key ? "white" : cat.accent,
+                    }}
+                  />
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Neighborhood + Type row */}
+          <div className="overflow-x-auto">
+            <div className="flex items-center gap-4 min-w-max">
+              {/* Neighborhood pills */}
+              <div className="flex items-center gap-1.5">
+                <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mr-1">Area</span>
+                <button
+                  onClick={() => setSelectedNeighborhood("")}
+                  className={`px-3 py-1 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
+                    selectedNeighborhood === ""
+                      ? "bg-violet-100 text-violet-700"
+                      : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                  }`}
+                >
+                  All
+                </button>
+                {NEIGHBORHOODS.map((n) => (
+                  <button
+                    key={n}
+                    onClick={() => setSelectedNeighborhood(selectedNeighborhood === n ? "" : n)}
+                    className={`px-3 py-1 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
+                      selectedNeighborhood === n
+                        ? "bg-violet-100 text-violet-700"
+                        : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                    }`}
+                  >
+                    {n}
+                  </button>
+                ))}
+              </div>
+
+              <div className="w-px h-4 bg-gray-200 flex-shrink-0" />
+
+              {/* Type pills */}
+              <div className="flex items-center gap-1.5">
+                <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mr-1">Type</span>
+                <button
+                  onClick={() => setSelectedType("")}
+                  className={`px-3 py-1 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
+                    selectedType === ""
+                      ? "bg-violet-100 text-violet-700"
+                      : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                  }`}
+                >
+                  All
+                </button>
+                {VENUE_TYPES.map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => setSelectedType(selectedType === t ? "" : t)}
+                    className={`px-3 py-1 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
+                      selectedType === t
+                        ? "bg-violet-100 text-violet-700"
+                        : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                    }`}
+                  >
+                    {VENUE_TYPE_LABELS[t]}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -138,6 +230,8 @@ export default function HomePage() {
                 ? VIBE_CATEGORIES[selectedCategory as keyof typeof VIBE_CATEGORIES]?.label
                 : searchQuery
                 ? `"${searchQuery}"`
+                : selectedNeighborhood || selectedType
+                ? [selectedNeighborhood, selectedType && VENUE_TYPE_LABELS[selectedType]].filter(Boolean).join(" · ")
                 : "All Venues"}
             </h2>
             <p className="text-xs text-gray-400 font-medium mt-0.5">
@@ -146,6 +240,17 @@ export default function HomePage() {
           </div>
 
           <div className="flex items-center gap-3">
+            {/* Sort */}
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="text-xs font-semibold text-gray-700 bg-gray-100 border-0 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-violet-300/50 cursor-pointer"
+            >
+              {SORT_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
+
             <div className="flex items-center bg-gray-100 rounded-lg p-0.5">
               <button
                 onClick={() => setViewMode("grid")}
