@@ -26,13 +26,13 @@ const VENUE_TYPE_LABELS: Record<string, string> = {
   WINERY: "Winery", FOOD_HALL: "Food Hall", OTHER: "Venue",
 };
 
-function pinIconUrl(color: string): string {
-  const svg =
-    `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="38" viewBox="0 0 28 38">` +
+function pinIconHtml(color: string): string {
+  return (
+    `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="38" viewBox="0 0 28 38" style="display:block;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.35))">` +
     `<path d="M14 0C6.268 0 0 6.268 0 14c0 9.333 14 24 14 24S28 23.333 28 14C28 6.268 21.732 0 14 0z" fill="${color}"/>` +
     `<circle cx="14" cy="14" r="5.5" fill="white"/>` +
-    `</svg>`;
-  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+    `</svg>`
+  );
 }
 
 export function MapView({ venues }: { venues: MapVenue[] }) {
@@ -65,6 +65,7 @@ export function MapView({ venues }: { venues: MapVenue[] }) {
       map.remove();
       mapRef.current = null;
       markersRef.current = [];
+      setIsReady(false); // reset so second mount (React Strict Mode) re-triggers marker effect
     };
   }, []);
 
@@ -85,8 +86,9 @@ export function MapView({ venues }: { venues: MapVenue[] }) {
       const score = venue.avgUserVibeScore ?? venue.vibeScore;
       const typeLabel = VENUE_TYPE_LABELS[venue.type] ?? venue.type;
 
-      const icon = new L.Icon({
-        iconUrl: pinIconUrl(color),
+      const icon = L.divIcon({
+        html: pinIconHtml(color),
+        className: "",          // suppress default leaflet-div-icon white-box style
         iconSize: [28, 38] as [number, number],
         iconAnchor: [14, 38] as [number, number],
         popupAnchor: [0, -40] as [number, number],
@@ -104,7 +106,7 @@ export function MapView({ venues }: { venues: MapVenue[] }) {
           >View venue &rarr;</a>
         </div>`;
 
-      const marker = new L.Marker(
+      const marker = L.marker(
         L.latLng(venue.latitude, venue.longitude),
         { icon }
       )
