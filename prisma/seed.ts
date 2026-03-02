@@ -663,10 +663,587 @@ async function main() {
         reviewCount: 2,
       },
     }),
+
+    // ── WEST LOOP ──────────────────────────────────────────────────────────────
+
+    prisma.venue.create({
+      data: {
+        name: "Girl & the Goat",
+        address: "809 W Randolph St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.girlandthegoat.com/chicago",
+        type: "RESTAURANT",
+        neighborhood: "West Loop",
+        imageUrl: "https://cdn.prod.website-files.com/64542138e0be122910058cd2/698386ff924420ec20d5563a_10_25_Girl_and_the_Goat_Service_Guests_Interior_NP_35.jpeg",
+        latitude: 41.8841,
+        longitude: -87.6479,
+        vibeCategory: "LIVELY_ENERGETIC",
+        vibeSummary: "Stephanie Izard's flagship has anchored Restaurant Row since 2010 and still fills every seat every night. The menu reads like a dare — goat dishes, wood-fired proteins, bold spice combinations — and delivers on every count. The room is loud and warm, the bar fills before the kitchen opens, and the energy never drops. Michelin Bib Gourmand and multiple James Beard Awards. Come hungry and plan to share everything.",
+        vibeScore: 8.8,
+        avgUserVibeScore: 4.6,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Au Cheval",
+        address: "800 W Randolph St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.auchevaldiner.com",
+        type: "BAR",
+        neighborhood: "West Loop",
+        imageUrl: "https://images.squarespace-cdn.com/content/v1/66e88482bbf8191c95a0db67/80c08e08-d71a-4766-8c5c-4a19591b768c/auc1-29.jpg",
+        latitude: 41.8846,
+        longitude: -87.6476,
+        vibeCategory: "TRENDY_HIPSTER",
+        vibeSummary: "A retro diner with exposed brick, vinyl booths, and the kind of perpetual line that signals something genuinely worth waiting for. The double cheeseburger — topped with an optional fried egg — is one of the most written-about burgers in America, and it earns every word. No reservations. Go early or go late. Don't skip the bone marrow.",
+        vibeScore: 8.9,
+        avgUserVibeScore: 4.7,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "The Publican",
+        address: "837 W Fulton Market",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.thepublicanrestaurant.com",
+        type: "RESTAURANT",
+        neighborhood: "West Loop",
+        imageUrl: "https://globalphile.s3.us-east-2.amazonaws.com/wp-content/uploads/2013/07/untitled-59-of-208.jpg",
+        latitude: 41.8861,
+        longitude: -87.6489,
+        vibeCategory: "CASUAL_CHILL",
+        vibeSummary: "A cathedral-scale beer hall with communal walnut tables, pendant-lit barrel ceilings, and a racetrack layout that encourages lingering. Paul Kahan's farm-to-table cooking — whole-animal pork, raw oysters, heirloom vegetables — is as serious as the 50+ beer list. The communal format rewards bringing a group, and the weekend brunch is one of Fulton Market's best reasons to arrive early.",
+        vibeScore: 8.7,
+        avgUserVibeScore: 4.6,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "avec",
+        address: "615 W Randolph St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.avecrestaurant.com",
+        type: "RESTAURANT",
+        neighborhood: "West Loop",
+        imageUrl: "https://globalphile.s3.us-east-2.amazonaws.com/wp-content/uploads/2013/07/2016-11-15-13.01.00.jpg",
+        latitude: 41.8832,
+        longitude: -87.6440,
+        vibeCategory: "COZY_INTIMATE",
+        vibeSummary: "More than twenty years in and avec still has a wait most nights — which says everything. The cedar-walled room seats 48 in close quarters that feel sociable rather than cramped, and the Mediterranean small plates reward sharing. The chorizo-stuffed medjool dates have built a mythology all their own. An original anchor of the West Loop dining scene and still one of its most essential rooms.",
+        vibeScore: 8.8,
+        avgUserVibeScore: 4.7,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Green Street Smoked Meats",
+        address: "112 N Green St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.greenstreetmeats.com",
+        type: "RESTAURANT",
+        neighborhood: "West Loop",
+        imageUrl: "https://images.squarespace-cdn.com/content/v1/66796d776badab5315907cae/448823f4-b994-42ad-99e2-a944e83ff8a1/interior21.jpg",
+        latitude: 41.8836,
+        longitude: -87.6490,
+        vibeCategory: "CASUAL_CHILL",
+        vibeSummary: "Central Texas-style barbecue down a brick-paved alley in Fulton Market — brisket and ribs smoked over post oak, served on butcher paper at communal tables. The warehouse setting is honest and the cooking makes no shortcuts. One of the few serious BBQ operations in a city that doesn't always give the form the respect it deserves.",
+        vibeScore: 8.2,
+        avgUserVibeScore: 4.4,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Smyth",
+        address: "177 N Ada St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.smythandtheloyalist.com",
+        type: "RESTAURANT",
+        neighborhood: "West Loop",
+        imageUrl: "https://res.cloudinary.com/the-infatuation/image/upload/q_auto,f_auto/cms/reviews/smyth/banners/1527287815.85",
+        latitude: 41.8855,
+        longitude: -87.6617,
+        vibeCategory: "UPSCALE_REFINED",
+        vibeSummary: "One of Chicago's two three-Michelin-star restaurants, Smyth operates from a West Loop loft with the quiet intensity of a kitchen that has earned everything it has. Chefs John and Karen Urie Shields build a single tasting menu around their Virginia farm — one of the most personal and rigorously sourced menus in the country. Downstairs, The Loyalist serves what many consider Chicago's best cheeseburger in a moody bar with no reservations required.",
+        vibeScore: 9.7,
+        avgUserVibeScore: 4.9,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Soho House Chicago",
+        address: "113 N Green St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.sohohouse.com/en-us/houses/soho-house-chicago",
+        type: "ROOFTOP",
+        neighborhood: "West Loop",
+        imageUrl: "https://www.therooftopguide.com/rooftop-bars-in-chicago/Bilder/soho-house-600-1.jpg",
+        latitude: 41.8838,
+        longitude: -87.6491,
+        vibeCategory: "ROOFTOP_VIEWS",
+        vibeSummary: "A converted Fulton Market meatpacking warehouse turned industrial-chic members' club. The rooftop pool deck offers 360-degree skyline views and is one of Chicago's most photographed outdoor spaces. The Allis café on the ground floor is open to all — exposed brick, vintage lighting, cocktails and coffee from morning to close. Rooftop and upper floors require membership or a hotel booking.",
+        vibeScore: 8.6,
+        avgUserVibeScore: 4.5,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Lone Wolf",
+        address: "806 W Randolph St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.lonewolftavern.com",
+        type: "BAR",
+        neighborhood: "West Loop",
+        imageUrl: "https://images.squarespace-cdn.com/content/v1/5953173129687f3f29a02430/1556052442937-Z1484YRJMMSYRORU9AO0/IMG_2036.jpg",
+        latitude: 41.8845,
+        longitude: -87.6478,
+        vibeCategory: "CASUAL_CHILL",
+        vibeSummary: "The pre-dinner and post-dinner bar of Restaurant Row — steps from Girl & the Goat, Au Cheval, and avec, but with none of the wait. Exposed brick, warm amber lighting, an excellent whiskey list, and craft cocktails built by people who know what they're doing. Open until 3am on weekends and reliably packed with the hospitality workers who run Randolph Street.",
+        vibeScore: 8.0,
+        avgUserVibeScore: 4.3,
+        reviewCount: 2,
+      },
+    }),
+
+    // ── PILSEN ────────────────────────────────────────────────────────────────
+
+    prisma.venue.create({
+      data: {
+        name: "The Tonk",
+        address: "1213 W 18th St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://thetonkchicago.com",
+        type: "RESTAURANT",
+        neighborhood: "Pilsen",
+        imageUrl: "https://media.timeout.com/images/101204639/750/422/image.jpg",
+        latitude: 41.8578,
+        longitude: -87.6568,
+        vibeCategory: "CASUAL_CHILL",
+        vibeSummary: "Memphis-style dry-rub barbecue slow-smoked over wood in the heart of Pilsen, paired with live roots music on weekends. The room is unpretentious and the pork is serious — ribs, pulled pork, and brisket cooked the right way without shortcuts. A Pilsen corner institution where the honky-tonk bar attached to the smokehouse feels like an entirely natural pairing.",
+        vibeScore: 7.8,
+        avgUserVibeScore: 4.2,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Carnitas Uruapan",
+        address: "1725 W 18th St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://carnitasuruapanchi.com",
+        type: "RESTAURANT",
+        neighborhood: "Pilsen",
+        imageUrl: "https://media.timeout.com/images/102836794/750/422/image.jpg",
+        latitude: 41.8575,
+        longitude: -87.6697,
+        vibeCategory: "HIDDEN_GEM",
+        vibeSummary: "A cash-only takeout counter making carnitas by the pound since 1975. Whole-hog pork is slow-cooked in copper vats in the open kitchen and carved to order. Lines form on weekends. There are no tables, no menu beyond the board, and no need for either. The kind of Chicago institution where you don't discover it so much as get taken there by someone who grew up eating it.",
+        vibeScore: 8.3,
+        avgUserVibeScore: 4.5,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "HaiSous Vietnamese Kitchen",
+        address: "1800 S Carpenter St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.haisous.com",
+        type: "RESTAURANT",
+        neighborhood: "Pilsen",
+        imageUrl: "https://media.timeout.com/images/103940251/750/422/image.jpg",
+        latitude: 41.8579,
+        longitude: -87.6535,
+        vibeCategory: "COZY_INTIMATE",
+        vibeSummary: "Five consecutive Michelin Bib Gourmand awards and four James Beard nominations for a Vietnamese kitchen in Pilsen where the cooking is rooted in family recipes and refined through serious technique. The caramelized fish sauce chicken wings are among the most ordered dishes in the neighborhood; the Vietnamese curry and papaya salad aren't far behind. The open kitchen and front windows make it an excellent room to eat in alone.",
+        vibeScore: 9.0,
+        avgUserVibeScore: 4.8,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "5 Rabanitos",
+        address: "1758 W 18th St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://5rabanitos.com",
+        type: "RESTAURANT",
+        neighborhood: "Pilsen",
+        imageUrl: "https://media.timeout.com/images/103144693/750/562/image.jpg",
+        latitude: 41.8580,
+        longitude: -87.6709,
+        vibeCategory: "CASUAL_CHILL",
+        vibeSummary: "One block from the National Museum of Mexican Art, 5 Rabanitos is the neighborhood taqueria Pilsen deserves. Chef Alfonso Sotelo trained at XOCO but cooks here with the ease of someone serving his own block. The tacos, green chicken tamales, and chicken soup are made with genuine care and priced for the community that actually lives here.",
+        vibeScore: 8.1,
+        avgUserVibeScore: 4.4,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Punch House",
+        address: "1227 W 18th St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.punchhousechicago.com",
+        type: "LOUNGE",
+        neighborhood: "Pilsen",
+        imageUrl: "https://images.squarespace-cdn.com/content/v1/63f55c9709669726b1501964/1524ee57-3622-41d0-a4a8-963f04f597cc/_MG_2874.jpg",
+        latitude: 41.8578,
+        longitude: -87.6575,
+        vibeCategory: "HIDDEN_GEM",
+        vibeSummary: "A mid-century modern rumpus room in the basement of Thalia Hall — vintage pendant lamps, a tropical fish tank at the center, and artisanal punches served by the glass, carafe, or bowl. The nightly song selector keeps the music from ever getting predictable, the McPunch Fish Sandwich is genuinely excellent, and the subterranean setting gives the whole room a pleasantly illicit warmth.",
+        vibeScore: 8.7,
+        avgUserVibeScore: 4.6,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Alulu Brewpub",
+        address: "2011 S Laflin St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.alulubrew.com",
+        type: "BREWERY",
+        neighborhood: "Pilsen",
+        imageUrl: "https://media.timeout.com/images/103876986/750/422/image.jpg",
+        latitude: 41.8547,
+        longitude: -87.6656,
+        vibeCategory: "CASUAL_CHILL",
+        vibeSummary: "A neighborhood brewpub making small-batch kettle sours, imperial stouts, and farmhouse ales available exclusively on-site. You can't find Alulu's beer anywhere else in Chicago. The American-Filipino fusion kitchen clears the brewpub bar by a significant margin, and the patio is one of the better outdoor spaces in Pilsen.",
+        vibeScore: 7.9,
+        avgUserVibeScore: 4.3,
+        reviewCount: 2,
+      },
+    }),
+
+    // ── ANDERSONVILLE ──────────────────────────────────────────────────────────
+
+    prisma.venue.create({
+      data: {
+        name: "Hopleaf Bar",
+        address: "5148 N Clark St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://hopleafbar.com",
+        type: "BAR",
+        neighborhood: "Andersonville",
+        imageUrl: "https://hopleafbar.com/wp-content/uploads/2018/04/FrontRoomClassic_36755_1000px.jpg",
+        latitude: 41.9758,
+        longitude: -87.6686,
+        vibeCategory: "CASUAL_CHILL",
+        vibeSummary: "Sixty-eight taps, no televisions, and a food menu that renders the 'just a beer bar' label permanently inadequate. Michael Roper has been running Hopleaf since 1992 on a simple philosophy: serve good beer, encourage conversation, feed people properly. The mussels in wit beer are a Chicago institution. The back room fills with regulars who treat it like a neighborhood living room.",
+        vibeScore: 8.9,
+        avgUserVibeScore: 4.7,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Nobody's Darling",
+        address: "1744 W Balmoral Ave",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.nobodysdarlingbar.com",
+        type: "BAR",
+        neighborhood: "Andersonville",
+        imageUrl: "https://media.timeout.com/images/105803188/750/422/image.jpg",
+        latitude: 41.9799,
+        longitude: -87.6741,
+        vibeCategory: "TRENDY_HIPSTER",
+        vibeSummary: "A queer, Black women-owned cocktail bar with a devoted following and a cocktail menu named after figures who deserve more recognition. The Jos Baker Manhattan and the Kincaid Daiquiri are built with precision and personality. Chandeliers, sidewalk seating, and zero-proof options that are as carefully made as anything alcoholic. One of the best cocktail bars on the North Side.",
+        vibeScore: 8.6,
+        avgUserVibeScore: 4.6,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Little Bad Wolf",
+        address: "1541 W Bryn Mawr Ave",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.littlebadwolfchicago.com",
+        type: "BAR",
+        neighborhood: "Andersonville",
+        imageUrl: "https://media.timeout.com/images/102996271/750/422/image.jpg",
+        latitude: 41.9834,
+        longitude: -87.6691,
+        vibeCategory: "CASUAL_CHILL",
+        vibeSummary: "Time Out named it Chicago's best burger — the three-patty Wolf Burger with fried egg, onion straws, and housemade pickles is why people seek it out. The bar is old-school and unhurried, the patio is one of the best in Andersonville, and no reservations means the vibe is genuinely walk-in and welcome.",
+        vibeScore: 8.4,
+        avgUserVibeScore: 4.5,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Big Jones",
+        address: "5347 N Clark St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://bigjoneschicago.com",
+        type: "RESTAURANT",
+        neighborhood: "Andersonville",
+        imageUrl: "https://media.timeout.com/images/102996196/750/562/image.jpg",
+        latitude: 41.9795,
+        longitude: -87.6682,
+        vibeCategory: "COZY_INTIMATE",
+        vibeSummary: "Chef Paul Fehribach has been cooking from pre-WWII Southern recipes since 2008, sourcing heirloom ingredients and making everything in-house. The shrimp and grits, fried chicken, and farmhouse chicken and dumplings take years to perfect and taste like it. Brunch starts with complimentary beignets. A warm Andersonville institution with a clearly defined culinary point of view.",
+        vibeScore: 8.7,
+        avgUserVibeScore: 4.6,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Anteprima",
+        address: "5316 N Clark St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.anteprimachicago.net",
+        type: "RESTAURANT",
+        neighborhood: "Andersonville",
+        imageUrl: "https://images.squarespace-cdn.com/content/v1/5b04ad0596d455bcadf5a4f1/1529047504361-R48IO9NNCWH6XSRLQSTN/Anteprima+Exterior.JPG",
+        latitude: 41.9782,
+        longitude: -87.6682,
+        vibeCategory: "COZY_INTIMATE",
+        vibeSummary: "A rustic Italian trattoria with a seasonal menu of wood-grilled proteins, housemade pasta, grilled octopus, and salumi plates. The room is intimate and unfussy, the back patio in summer is one of Andersonville's most appealing outdoor spaces, and the kitchen's consistency over many years has made it a neighborhood anchor. Not trying to be anything other than what it is — which is exactly right.",
+        vibeScore: 8.5,
+        avgUserVibeScore: 4.5,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Simon's Tavern",
+        address: "5210 N Clark St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://simonstavern.shop",
+        type: "BAR",
+        neighborhood: "Andersonville",
+        imageUrl: "https://media.timeout.com/images/100995545/750/562/image.jpg",
+        latitude: 41.9770,
+        longitude: -87.6684,
+        vibeCategory: "DIVE_BAR",
+        vibeSummary: "A Swedish-rooted Andersonville institution since 1934 — the Viking fish mascot, seasonal glögg in winter, and vintage decor are not affectations but the actual furniture of a 90-year bar. Simon's has survived every wave of neighborhood change while remaining exactly itself: quality draft beer, live music, and a room that belongs to the street it sits on.",
+        vibeScore: 7.8,
+        avgUserVibeScore: 4.3,
+        reviewCount: 2,
+      },
+    }),
+
+    // ── LAKEVIEW ──────────────────────────────────────────────────────────────
+
+    prisma.venue.create({
+      data: {
+        name: "Pequod's Pizza",
+        address: "2207 N Clybourn Ave",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://pequodspizza.com",
+        type: "RESTAURANT",
+        neighborhood: "Lakeview",
+        imageUrl: "https://pequodspizza.com/wp-content/uploads/2017/04/pequods-deep-dish-pizza-chicago.jpg",
+        latitude: 41.9218,
+        longitude: -87.6645,
+        vibeCategory: "CASUAL_CHILL",
+        vibeSummary: "One of the two or three deep-dish pizzas Chicagoans will actually defend in an argument. The caramelized cheese crust — a Pequod's invention — provides a signature crunch that separates it from every other deep-dish in the city. The room is dark, wood-paneled, and unpretentious, and the wait for a table is as much a part of the experience as the pizza itself.",
+        vibeScore: 8.6,
+        avgUserVibeScore: 4.6,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Gman Tavern",
+        address: "3740 N Clark St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://gmantavern.com",
+        type: "BAR",
+        neighborhood: "Lakeview",
+        imageUrl: "https://gmantavern.com/wp-content/uploads/2023/05/20230224_GManTavern_Interiors_068_webv2.jpg",
+        latitude: 41.9473,
+        longitude: -87.6593,
+        vibeCategory: "LIVELY_ENERGETIC",
+        vibeSummary: "Two blocks from Wrigley Field with none of the sports-bar clichés. The Gman books actual musicians — rock, jazz, blues, and everything adjacent — and hosts literary events when the stage is dark. Exposed brick, good cocktails, and a warm crowd that comes for the programming rather than the game. The kind of neighborhood bar that takes its lineup as seriously as any venue in the city.",
+        vibeScore: 7.9,
+        avgUserVibeScore: 4.3,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Pilot Project Brewing",
+        address: "3473 N Clark St",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.pilotprojectbrewing.com",
+        type: "BREWERY",
+        neighborhood: "Lakeview",
+        imageUrl: "https://images.squarespace-cdn.com/content/v1/5cf7dc8c6621770001b9480b/fc27e6e7-8512-4013-948e-391f6ebe1cd6/WrigleyvilleMainSpace-Jenni_7-10-25-1.jpg",
+        latitude: 41.9454,
+        longitude: -87.6573,
+        vibeCategory: "LIVELY_ENERGETIC",
+        vibeSummary: "Chicago's premier brewery incubator: up-and-coming brewers rotate through to make small-batch releases available exclusively here. The 3,500-square-foot patio is one of Lakeview's best outdoor spaces, the Devious Lounge in the basement runs cocktails and rotating DJs, and the proximity to Wrigley brings a game-day crowd that knows how to drink. For people who like rotating taps more than predictable beer.",
+        vibeScore: 8.2,
+        avgUserVibeScore: 4.4,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Figo Wine Bar",
+        address: "3207 N Sheffield Ave",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.figowinebar.com",
+        type: "BAR",
+        neighborhood: "Lakeview",
+        imageUrl: "https://cdn.prod.website-files.com/627d3493d0adb61b594acd48/640e1555e1340e16dc973cea_444C9873-9AB8-4C07-AD6B-4C3F78E60B48.jpg",
+        latitude: 41.9389,
+        longitude: -87.6534,
+        vibeCategory: "COZY_INTIMATE",
+        vibeSummary: "A candlelit Italian-leaning wine bar in Lakeview East with intimate booths, warm lighting, and a curated list paired with charcuterie and small plates. The kind of place where a conversation naturally stretches from one glass to three. Lakeview's most reliable date-night destination, and one of the few wine bars in the area that treats the wine list as seriously as the atmosphere.",
+        vibeScore: 8.4,
+        avgUserVibeScore: 4.5,
+        reviewCount: 2,
+      },
+    }),
+
+    // ── BUCKTOWN ──────────────────────────────────────────────────────────────
+
+    prisma.venue.create({
+      data: {
+        name: "Le Bouchon",
+        address: "1958 N Damen Ave",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.lebouchonofchicago.com",
+        type: "RESTAURANT",
+        neighborhood: "Bucktown",
+        imageUrl: "https://images.squarespace-cdn.com/content/v1/57f439f65016e15c07db069d/1475623872377-H87F0QA6D57SM93IFFPQ/image-asset.png",
+        latitude: 41.9178,
+        longitude: -87.6774,
+        vibeCategory: "COZY_INTIMATE",
+        vibeSummary: "A classic Parisian bistro that arrived in Bucktown in 1993 and has been making the same case for proper French cooking ever since. Tight tables, red-and-white accents, dim lighting, and a menu that executes steak au poivre, moules marinières, and French onion soup with no theatrical flourishes — just the skill to make the classics taste exactly right. One of Chicago's most consistently romantic rooms.",
+        vibeScore: 8.8,
+        avgUserVibeScore: 4.7,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Handlebar",
+        address: "2311 W North Ave",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.handlebarchicago.com",
+        type: "BAR",
+        neighborhood: "Bucktown",
+        imageUrl: "https://images.squarespace-cdn.com/content/v1/5bd8a1a24eddecb150a2a279/1541625222318-VJ0J057GWJ2AU1EADX12/Handlebar+patio+layola+paper.jpg",
+        latitude: 41.9100,
+        longitude: -87.6853,
+        vibeCategory: "CASUAL_CHILL",
+        vibeSummary: "A vegetarian and vegan comfort-food destination that doesn't announce itself as one. The space reads as a cheerful neighborhood bar with a sunny beer garden, and the food happens to be entirely plant-based and genuinely excellent. The cocktail list is well-built, the backyard patio is casual and welcoming, and the crowd doesn't require a dress code. Bike-friendly, per the name.",
+        vibeScore: 8.3,
+        avgUserVibeScore: 4.4,
+        reviewCount: 2,
+      },
+    }),
+
+    prisma.venue.create({
+      data: {
+        name: "Club Lucky",
+        address: "1824 W Wabansia Ave",
+        city: "Chicago",
+        state: "IL",
+        country: "US",
+        website: "https://www.clubluckychicago.com",
+        type: "LOUNGE",
+        neighborhood: "Bucktown",
+        imageUrl: "https://www.clubluckychicago.com/images/slideshow/full/clublucky-13_2.jpg",
+        latitude: 41.9125,
+        longitude: -87.6736,
+        vibeCategory: "LIVELY_ENERGETIC",
+        vibeSummary: "A red-sauce Italian supper club from 1992 with leather booths, amber lighting, martinis in proper glasses, and pasta plates that don't apologize for their size. The retro 1940s lounge atmosphere is entirely earned — nothing here was designed to evoke nostalgia because nothing here was ever updated. One of Chicago's most fun dinner experiences, and completely unpretentious about it.",
+        vibeScore: 8.5,
+        avgUserVibeScore: 4.5,
+        reviewCount: 2,
+      },
+    }),
   ]);
 
   // Reviews
-  const [lula, mitocaya, billySunday, bestIntentions, schwa, nicks, piece, alinea, northPond, gejas, erieCafe, sparrow, luxbar, pandan, kasama, feld, atavola, forbiddenRoot, boeufhaus, sportsmanClub, emptyBottle, tryzub, oldLviv, shokolad, laoPengYou, allTogetherNow, nettare, goldenYears, starBar] = venues;
+  const [lula, mitocaya, billySunday, bestIntentions, schwa, nicks, piece, alinea, northPond, gejas, erieCafe, sparrow, luxbar, pandan, kasama, feld, atavola, forbiddenRoot, boeufhaus, sportsmanClub, emptyBottle, tryzub, oldLviv, shokolad, laoPengYou, allTogetherNow, nettare, goldenYears, starBar, girlGoat, auCheval, publican, avec, greenStreet, smyth, sohoHouse, loneWolf, tonk, carnitasUruapan, haisous, cincoRabanitos, punchHouse, alulu, hopleaf, nobodysDarling, littleBadWolf, bigJones, anteprima, simonsTavern, pequods, gmanTavern, pilotProject, figo, leBouchon, handlebar, clubLucky] = venues;
 
   await prisma.review.createMany({
     data: [
@@ -1044,7 +1621,7 @@ async function main() {
         downvotes: 0,
       },
 
-      // The Empty Bottle
+      // Empty Bottle
       {
         venueId: emptyBottle.id,
         authorName: "Ben H.",
@@ -1214,6 +1791,114 @@ async function main() {
         upvotes: 11,
         downvotes: 0,
       },
+
+      // Girl & the Goat
+      { venueId: girlGoat.id, authorName: "Rachel T.", vibeRating: 5, vibeCategory: "LIVELY_ENERGETIC", comment: "Every dish is a conversation starter. The wood-roasted pig face was unforgettable — I know how that sounds, but trust it. The room has an energy that makes you feel like you're exactly where you should be on a Friday night in Chicago.", upvotes: 48, downvotes: 1 },
+      { venueId: girlGoat.id, authorName: "Carlos M.", vibeRating: 4, comment: "We shared about eight plates and everything landed. The goat cheese fondue and the chickpea fritters were the standouts. Loud room, but that's part of it. Book well in advance.", upvotes: 27, downvotes: 0 },
+
+      // Au Cheval
+      { venueId: auCheval.id, authorName: "Jess P.", vibeRating: 5, vibeCategory: "TRENDY_HIPSTER", comment: "The burger lives up to every word written about it. Got there at 5pm on a Tuesday and waited 40 minutes — still worth it. The bone marrow is mandatory. The atmosphere is exactly what a diner should be if a diner took itself seriously.", upvotes: 63, downvotes: 2 },
+      { venueId: auCheval.id, authorName: "Nate H.", vibeRating: 4, comment: "I've been to better-known burger spots in New York and LA. Au Cheval is still the best. The brioche bun-to-patty ratio is perfect, the American cheese is applied with conviction. No reservations is annoying but the bar stools are first-come.", upvotes: 34, downvotes: 1 },
+
+      // The Publican
+      { venueId: publican.id, authorName: "Marta K.", vibeRating: 5, vibeCategory: "CASUAL_CHILL", comment: "Came for brunch with four people and we ordered half the menu. The oysters were pristine, the pork rinds are legendary, and the beer list is longer than my arm. The communal tables make you feel like you've been invited to a very good party.", upvotes: 41, downvotes: 0 },
+      { venueId: publican.id, authorName: "Ben F.", vibeRating: 4, comment: "One of the great beer halls in the city. Paul Kahan's sourcing shows in every dish. The room handles a large group well and the staff knows the menu deeply. Come hungry.", upvotes: 22, downvotes: 0 },
+
+      // avec
+      { venueId: avec.id, authorName: "Sophie L.", vibeRating: 5, vibeCategory: "COZY_INTIMATE", comment: "The chorizo-stuffed dates are mandatory. I've brought every out-of-town guest here for twenty years and no one has ever been disappointed. The cedar room, the communal tables, the focused menu — avec is what a wine bar should be.", upvotes: 52, downvotes: 0 },
+      { venueId: avec.id, authorName: "David R.", vibeRating: 5, comment: "Sat at the communal table next to a couple celebrating an anniversary and ended up sharing a bottle of wine with them. That's avec. The food is exceptional, the wine list is smart, and the intimacy of the room creates real conversations.", upvotes: 31, downvotes: 0 },
+
+      // Green Street Smoked Meats
+      { venueId: greenStreet.id, authorName: "Mike D.", vibeRating: 4, vibeCategory: "CASUAL_CHILL", comment: "Finally a serious Texas-style BBQ operation in Chicago. The brisket has the right bark, the ribs are properly smoky, and the sides don't embarrass themselves. The alley location is part of the charm.", upvotes: 29, downvotes: 2 },
+      { venueId: greenStreet.id, authorName: "Priya S.", vibeRating: 4, comment: "The pulled pork sandwich is the move. Everything is smoked over real wood — you taste the difference immediately. No-frills room, honest food, fair prices for West Loop.", upvotes: 17, downvotes: 0 },
+
+      // Smyth
+      { venueId: smyth.id, authorName: "Wei L.", vibeRating: 5, vibeCategory: "UPSCALE_REFINED", comment: "We saved for this for months. The farm sourcing is evident in every single course — vegetables taste like what vegetables are supposed to taste like. The kitchen's restraint is rare. Three Michelin stars and still the most personal meal I've had in Chicago.", upvotes: 71, downvotes: 0 },
+      { venueId: smyth.id, authorName: "Elena B.", vibeRating: 5, comment: "Had dinner at Smyth and drinks afterward at The Loyalist downstairs. Two completely different experiences at the same address. The Loyalist burger alone would justify a separate reservation. Smyth is a once-a-year experience that stays with you.", upvotes: 44, downvotes: 0 },
+
+      // Soho House
+      { venueId: sohoHouse.id, authorName: "Alex W.", vibeRating: 4, vibeCategory: "ROOFTOP_VIEWS", comment: "The Allis on the ground floor is open to everyone and is a genuinely great room for a cocktail or a coffee meeting. The rooftop is everything you've seen in photos. Membership is worth it if you're in creative industries.", upvotes: 33, downvotes: 3 },
+      { venueId: sohoHouse.id, authorName: "Nina T.", vibeRating: 4, comment: "The best thing about Soho House Chicago is that the building itself is spectacular — the original meatpacking bones are still there under the design. The Allis is surprisingly accessible and the cocktails are well-made.", upvotes: 19, downvotes: 1 },
+
+      // Lone Wolf
+      { venueId: loneWolf.id, authorName: "James O.", vibeRating: 4, vibeCategory: "CASUAL_CHILL", comment: "The perfect bar for before or after dinner on Randolph. No wait, good whiskey, and bartenders who are clearly industry people. I've ended more West Loop nights here than anywhere else.", upvotes: 24, downvotes: 0 },
+      { venueId: loneWolf.id, authorName: "Amy C.", vibeRating: 4, comment: "The cocktail list rotates seasonally and is more interesting than most bars in the area. The late hours are a gift — still busy at midnight on a weeknight.", upvotes: 14, downvotes: 0 },
+
+      // The Tonk
+      { venueId: tonk.id, authorName: "Luis R.", vibeRating: 4, vibeCategory: "CASUAL_CHILL", comment: "The ribs here are the real thing — dry-rubbed, smoked low and slow, with actual smoke flavor that a lot of Chicago BBQ misses. The live music on weekends makes it feel like a bar that also happens to serve incredible food.", upvotes: 26, downvotes: 1 },
+      { venueId: tonk.id, authorName: "Carla M.", vibeRating: 4, comment: "A Pilsen institution. The pulled pork sandwich and a cold beer on the patio is a perfect summer afternoon. Friendly, unpretentious, and the kind of neighborhood spot that's hard to find.", upvotes: 15, downvotes: 0 },
+
+      // Carnitas Uruapan
+      { venueId: carnitasUruapan.id, authorName: "Rosa V.", vibeRating: 5, vibeCategory: "HIDDEN_GEM", comment: "My family has been getting carnitas here since before I was born. A pound of carnitas, a bag of fresh tortillas, some salsa verde — that's the perfect Saturday. Nothing has changed in decades and nothing should.", upvotes: 57, downvotes: 0 },
+      { venueId: carnitasUruapan.id, authorName: "Tom B.", vibeRating: 5, comment: "I drove from Lincoln Park for this and would do it every weekend if I could. The chicharrones are perfect. Cash only, takeout only, and completely worth organizing your day around.", upvotes: 33, downvotes: 0 },
+
+      // HaiSous
+      { venueId: haisous.id, authorName: "Linda T.", vibeRating: 5, vibeCategory: "COZY_INTIMATE", comment: "The fish sauce chicken wings are among the best things I've eaten in Chicago. Five Bib Gourmands in a row is not a fluke — the cooking here is rooted and precise. The papaya salad alone is worth the trip to Pilsen.", upvotes: 49, downvotes: 0 },
+      { venueId: haisous.id, authorName: "Kevin N.", vibeRating: 5, comment: "Took my parents here for their anniversary and they still talk about it. The Vietnamese curry is extraordinary. The room is modest but the cooking is chef-level serious. One of Chicago's best restaurants, full stop.", upvotes: 37, downvotes: 0 },
+
+      // 5 Rabanitos
+      { venueId: cincoRabanitos.id, authorName: "Maria G.", vibeRating: 4, vibeCategory: "CASUAL_CHILL", comment: "The best affordable meal in Pilsen. The green chicken tamales are made with care and the tacos are priced like they should be. Right by the museum — a perfect pre or post visit lunch.", upvotes: 28, downvotes: 0 },
+      { venueId: cincoRabanitos.id, authorName: "Sam L.", vibeRating: 4, comment: "You can taste the XOCO training in the salsas and the masa. This is real neighborhood Mexican food, not a performance of it. Go early on weekends.", upvotes: 16, downvotes: 0 },
+
+      // Punch House
+      { venueId: punchHouse.id, authorName: "Ava K.", vibeRating: 5, vibeCategory: "HIDDEN_GEM", comment: "The tropical fish tank in the center of a basement bar is a statement of intent and it completely delivers. The house punch by the bowl for a group is the reason to come. The McPunch Fish Sandwich is better than any bar food has a right to be.", upvotes: 42, downvotes: 1 },
+      { venueId: punchHouse.id, authorName: "Diego F.", vibeRating: 4, comment: "Going to Punch House feels like stumbling into a party someone forgot to invite you to — in a good way. The song selector sets the mood perfectly. One of the most distinctive bar experiences in Chicago.", upvotes: 23, downvotes: 0 },
+
+      // Alulu
+      { venueId: alulu.id, authorName: "Chris T.", vibeRating: 4, vibeCategory: "CASUAL_CHILL", comment: "The kettle sours here are some of the best in Chicago and you genuinely can't get them anywhere else. The Filipino-American food menu is a real surprise — the lumpia are excellent. A neighborhood brewery that takes both sides of the equation seriously.", upvotes: 21, downvotes: 0 },
+      { venueId: alulu.id, authorName: "Hana S.", vibeRating: 4, comment: "The patio in summer is fantastic. The beer is local, interesting, and exclusive to this taproom. The food is better than it needs to be. A Pilsen gem worth the walk from 18th Street.", upvotes: 12, downvotes: 0 },
+
+      // Hopleaf
+      { venueId: hopleaf.id, authorName: "Greg W.", vibeRating: 5, vibeCategory: "CASUAL_CHILL", comment: "I've been a regular for fifteen years. No TVs, 68 taps, and the best mussels in the city. Michael Roper has never compromised on quality and it shows in every pint. The most civilized bar in Chicago.", upvotes: 64, downvotes: 0 },
+      { venueId: hopleaf.id, authorName: "Sara M.", vibeRating: 5, comment: "The back room at Hopleaf on a cold Sunday afternoon with a Belgian tripel and a plate of mussels is one of Chicago's great experiences. No reservations for groups under 6, so show up early.", upvotes: 38, downvotes: 0 },
+
+      // Nobody's Darling
+      { venueId: nobodysDarling.id, authorName: "Jordan T.", vibeRating: 5, vibeCategory: "TRENDY_HIPSTER", comment: "The cocktails are named after people who deserve recognition and taste like they were built with intention. The Jos Baker Manhattan is extraordinary. The space is beautiful and the crowd is the most welcoming I've found in a bar.", upvotes: 45, downvotes: 0 },
+      { venueId: nobodysDarling.id, authorName: "Cleo R.", vibeRating: 5, comment: "One of the best cocktail bars in Chicago, full stop. The zero-proof menu is as serious as the rest. A bar that has a genuine point of view about what it is and who it's for.", upvotes: 29, downvotes: 0 },
+
+      // Little Bad Wolf
+      { venueId: littleBadWolf.id, authorName: "Pat N.", vibeRating: 4, vibeCategory: "CASUAL_CHILL", comment: "Time Out wasn't wrong about the burger. The three-patty setup with the fried egg and onion straws is perfectly calibrated. The patio is one of the best in Andersonville. No reservations, but the bar is always worth sitting at.", upvotes: 33, downvotes: 1 },
+      { venueId: littleBadWolf.id, authorName: "Kim H.", vibeRating: 4, comment: "Came for the burger, stayed for the whole afternoon. The neighborhood bar vibe is exactly right — unpretentious, comfortable, and never trying too hard. The cocktail list is better than you'd expect.", upvotes: 18, downvotes: 0 },
+
+      // Big Jones
+      { venueId: bigJones.id, authorName: "Vanessa C.", vibeRating: 5, vibeCategory: "COZY_INTIMATE", comment: "Paul Fehribach cooks with a historian's conviction. The chicken and dumplings are made from a pre-WWII recipe and taste like it was perfected over generations. The brunch beignets at the start are a perfect preview of what's coming.", upvotes: 41, downvotes: 0 },
+      { venueId: bigJones.id, authorName: "Ray F.", vibeRating: 4, comment: "The shrimp and grits here are the best I've had outside the South. The room is warm and quiet in a way that feels genuinely unhurried. One of Andersonville's most beloved restaurants for good reason.", upvotes: 22, downvotes: 0 },
+
+      // Anteprima
+      { venueId: anteprima.id, authorName: "Lucia B.", vibeRating: 5, vibeCategory: "COZY_INTIMATE", comment: "The back patio in summer is the most romantic outdoor dining space in Andersonville. The housemade pasta is seasonal and consistently excellent. A trattoria that knows what it is and does it without compromise.", upvotes: 36, downvotes: 0 },
+      { venueId: anteprima.id, authorName: "Marco D.", vibeRating: 4, comment: "The grilled octopus and the salumi plate together are the perfect start. The pasta changes with the season and always rewards ordering. One of the most reliable dinner restaurants on the North Side.", upvotes: 20, downvotes: 0 },
+
+      // Simon's Tavern
+      { venueId: simonsTavern.id, authorName: "Erik L.", vibeRating: 4, vibeCategory: "DIVE_BAR", comment: "Simon's is 90 years old and you can feel every year of it in the best possible way. The glögg in winter is a tradition worth honoring. A bar that belongs to its neighborhood rather than the other way around.", upvotes: 31, downvotes: 0 },
+      { venueId: simonsTavern.id, authorName: "Ingrid P.", vibeRating: 4, comment: "The Viking fish on the sign is the best neighborhood bar mascot in Chicago. Old-school Swedish bar with real history and genuinely good beer. Andersonville at its most itself.", upvotes: 17, downvotes: 0 },
+
+      // Pequod's
+      { venueId: pequods.id, authorName: "Dan K.", vibeRating: 5, vibeCategory: "CASUAL_CHILL", comment: "The caramelized crust is the difference between Pequod's and every other deep-dish in the city. Get there early or expect a wait. The wait is worth it. This is the pizza Chicagoans actually eat.", upvotes: 55, downvotes: 2 },
+      { venueId: pequods.id, authorName: "Liz M.", vibeRating: 4, comment: "Brought my New York cousin here specifically to settle an argument. She ate three slices and conceded. The dark room and the cold beer make the whole experience feel like a ritual.", upvotes: 33, downvotes: 1 },
+
+      // Gman Tavern
+      { venueId: gmanTavern.id, authorName: "Tim O.", vibeRating: 4, vibeCategory: "LIVELY_ENERGETIC", comment: "A proper music venue that also serves good drinks — a combination rarer than it should be. Two blocks from Wrigley and nothing like a sports bar. The literary events are a great discovery if you live in the neighborhood.", upvotes: 22, downvotes: 0 },
+      { venueId: gmanTavern.id, authorName: "Fran B.", vibeRating: 4, comment: "The cocktail list rotates and the staff actually knows what's on it. The exposed brick room has great acoustics for the live shows. A neighborhood bar with genuine programming ambition.", upvotes: 13, downvotes: 0 },
+
+      // Pilot Project Brewing
+      { venueId: pilotProject.id, authorName: "Joe S.", vibeRating: 4, vibeCategory: "LIVELY_ENERGETIC", comment: "The rotating tap concept is brilliant — you never get the same lineup twice. The patio near Wrigley is enormous and one of the best places in Lakeview to spend a summer afternoon. The Devious Lounge downstairs is a whole different vibe.", upvotes: 26, downvotes: 0 },
+      { venueId: pilotProject.id, authorName: "Anna R.", vibeRating: 4, comment: "Supporting up-and-coming Chicago brewers and getting to taste the results exclusively here makes Pilot Project worth the visit on principle alone. The beers are genuinely interesting and the space handles a crowd well.", upvotes: 15, downvotes: 0 },
+
+      // Figo
+      { venueId: figo.id, authorName: "Isabel C.", vibeRating: 5, vibeCategory: "COZY_INTIMATE", comment: "The most reliable date-night spot in Lakeview East. The wine list is thoughtful and the staff can guide you through it. The candlelit booths, the charcuterie, the unhurried pace — everything about this place is calibrated for a good evening.", upvotes: 34, downvotes: 0 },
+      { venueId: figo.id, authorName: "Marcus W.", vibeRating: 4, comment: "A genuinely cozy wine bar that doesn't try to be more than it is. The Italian-leaning selection is excellent and the small plates are a notch above typical bar food. Easy to spend three hours here without noticing.", upvotes: 19, downvotes: 0 },
+
+      // Le Bouchon
+      { venueId: leBouchon.id, authorName: "Claire F.", vibeRating: 5, vibeCategory: "COZY_INTIMATE", comment: "Thirty years and the steak au poivre is still flawless. The room is exactly as tight and romantic as it's always been. Le Bouchon is the answer to every Chicago question that starts with 'where should I take someone I want to impress?'", upvotes: 47, downvotes: 0 },
+      { venueId: leBouchon.id, authorName: "Paul N.", vibeRating: 5, comment: "The moules marinières and a carafe of Muscadet at Le Bouchon is one of Chicago's great meals. The French onion soup is textbook. A bistro that has never needed to update because it got everything right the first time.", upvotes: 30, downvotes: 0 },
+
+      // Handlebar
+      { venueId: handlebar.id, authorName: "Zoe T.", vibeRating: 4, vibeCategory: "CASUAL_CHILL", comment: "I'm not vegetarian but I eat here regularly because the food is genuinely better than most non-vegetarian bars. The back patio is one of the best in Bucktown. The cocktails are solid and unpretentious.", upvotes: 28, downvotes: 0 },
+      { venueId: handlebar.id, authorName: "Ryan M.", vibeRating: 4, comment: "The beer garden alone is worth it in summer. Welcoming to everyone, good food, affordable drinks. The most comfortable bar in the neighborhood.", upvotes: 16, downvotes: 0 },
+
+      // Club Lucky
+      { venueId: clubLucky.id, authorName: "Donna S.", vibeRating: 5, vibeCategory: "LIVELY_ENERGETIC", comment: "There is no more fun dinner in Bucktown than Club Lucky. The martinis are serious, the chicken parm is enormous, the booths are leather, and the room feels like 1945 in the best way. A Chicago institution that doesn't know it's supposed to be passé.", upvotes: 43, downvotes: 1 },
+      { venueId: clubLucky.id, authorName: "Frank B.", vibeRating: 4, comment: "The pasta portions are genuinely absurd in a way that makes you want to come back with four people. The retro lounge energy is completely authentic because nothing has ever changed. One of Chicago's most enjoyable restaurants.", upvotes: 25, downvotes: 0 },
     ],
   });
 

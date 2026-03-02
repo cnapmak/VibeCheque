@@ -31,7 +31,7 @@ interface Venue {
   reviewCount: number;
 }
 
-const NEIGHBORHOODS = ["Ukrainian Village", "Logan Square", "Avondale", "Wicker Park", "Lincoln Park", "River North", "Gold Coast"];
+const NEIGHBORHOODS = ["Ukrainian Village", "West Loop", "Pilsen", "Andersonville", "Lakeview", "Bucktown", "Logan Square", "Avondale", "Wicker Park", "Lincoln Park", "River North", "Gold Coast"];
 const VENUE_TYPES = ["RESTAURANT", "BAR", "BREWERY", "CAFE", "LOUNGE", "ROOFTOP", "OTHER"];
 const VENUE_TYPE_LABELS: Record<string, string> = {
   RESTAURANT: "Restaurant", BAR: "Bar", BREWERY: "Brewery", CAFE: "Café",
