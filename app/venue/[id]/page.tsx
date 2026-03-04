@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { VibeBadge } from "@/components/Vibebadge";
+import { PulseDot } from "@/components/PulseDot";
 import { VenueCard } from "@/components/VenueCard";
 import { ReviewCard } from "@/components/ReviewCard";
 import { ReviewForm } from "@/components/ReviewForm";
@@ -243,7 +244,12 @@ export default function VenuePage() {
           </div>
         )}
 
-        {venue.vibeSummary ? (
+        {analyzing ? (
+          <div className="py-6 flex flex-col items-center gap-3">
+            <PulseDot color={vibe?.accent ?? "#7c3aed"} size={72} />
+            <p className="text-sm text-gray-400 font-medium">Reading the room…</p>
+          </div>
+        ) : venue.vibeSummary ? (
           <div>
             <p className="text-gray-600 leading-relaxed text-sm italic border-l-2 border-gray-100 pl-4">
               {venue.vibeSummary}

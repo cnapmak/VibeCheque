@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { MapPin, Star, MessageSquare } from "lucide-react";
 import { VibeBadge } from "./Vibebadge";
+import { PulseDot } from "./PulseDot";
 import { getVibeCategory } from "@/lib/vibeCategories";
 
 interface VenueCardProps {
@@ -36,6 +37,10 @@ const VENUE_TYPE_LABELS: Record<string, string> = {
 
 export function VenueCard({ venue }: VenueCardProps) {
   const vibe = venue.vibeCategory ? getVibeCategory(venue.vibeCategory) : null;
+  const isHot =
+    (venue.avgUserVibeScore != null && venue.avgUserVibeScore >= 4) ||
+    (venue.vibeScore != null && venue.vibeScore >= 8);
+  const dotColor = vibe?.accent ?? "#6366f1";
 
   return (
     <Link href={`/venue/${venue.id}`}>
@@ -43,23 +48,40 @@ export function VenueCard({ venue }: VenueCardProps) {
 
         {/* Cover Image */}
         {venue.imageUrl ? (
-          <div className="h-44 w-full overflow-hidden">
+          <div className="h-44 w-full overflow-hidden relative">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={venue.imageUrl}
               alt={venue.name}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
+            {isHot && (
+              <div className="absolute top-2.5 right-2.5 flex items-center gap-1 bg-black/55 backdrop-blur-sm rounded-full pl-0.5 pr-2 py-0.5">
+                <PulseDot color={dotColor} size={16} />
+                <span className="text-[10px] font-bold text-white uppercase tracking-widest leading-none">
+                  Hot
+                </span>
+              </div>
+            )}
           </div>
         ) : (
           <div
-            className="h-28 w-full"
+            className="h-28 w-full relative"
             style={{
               background: vibe
                 ? `linear-gradient(135deg, ${vibe.accent}22 0%, ${vibe.accent}44 100%)`
                 : "linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%)",
             }}
-          />
+          >
+            {isHot && (
+              <div className="absolute top-2.5 right-2.5 flex items-center gap-1 bg-black/40 backdrop-blur-sm rounded-full pl-0.5 pr-2 py-0.5">
+                <PulseDot color={dotColor} size={16} />
+                <span className="text-[10px] font-bold text-white uppercase tracking-widest leading-none">
+                  Hot
+                </span>
+              </div>
+            )}
+          </div>
         )}
 
         {/* Category accent line */}

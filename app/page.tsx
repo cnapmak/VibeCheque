@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { Search, MapPin, Sparkles, LayoutGrid, Map } from "lucide-react";
 import { VenueCard } from "@/components/VenueCard";
+import { PulseDot } from "@/components/PulseDot";
 import { VIBE_CATEGORIES } from "@/lib/vibeCategories";
 import Link from "next/link";
 
@@ -84,8 +85,13 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="hero-gradient text-white py-24 px-4">
-        <div className="max-w-3xl mx-auto text-center">
+      <section className="hero-gradient text-white py-24 px-4 relative overflow-hidden">
+        {/* Vibe radar — decorative background pulse */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.09]">
+          <PulseDot color="white" size={680} ringsOnly strokeWidth={0.5} />
+        </div>
+
+        <div className="max-w-3xl mx-auto text-center relative">
           <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-xs font-semibold tracking-widest uppercase mb-8 text-white/70">
             <Sparkles size={12} />
             <span>AI-Powered Vibe Analysis · Chicago</span>
