@@ -37,7 +37,7 @@ interface SimilarVenue {
   longitude?: number | null;
   vibeCategory?: string | null;
   vibeSummary?: string | null;
-  vibeScore?: number | null;
+  googleRating?: number | null;
   avgUserVibeScore?: number | null;
   reviewCount: number;
 }
@@ -55,7 +55,7 @@ interface Venue {
   type: string;
   vibeCategory?: string | null;
   vibeSummary?: string | null;
-  vibeScore?: number | null;
+  googleRating?: number | null;
   avgUserVibeScore?: number | null;
   reviewCount: number;
   vibeAnalyzedAt?: string | null;
@@ -197,13 +197,13 @@ export default function VenuePage() {
 
           {/* Score Block */}
           <div className="flex flex-col items-end gap-3 flex-shrink-0">
-            {venue.vibeScore != null && (
+            {venue.googleRating != null && (
               <div className="text-right">
                 <div className="text-4xl font-black text-gray-900 leading-none">
-                  {venue.vibeScore.toFixed(1)}
+                  {venue.googleRating.toFixed(1)}
                 </div>
-                <div className="text-xs text-gray-400 font-medium mt-1">AI Score</div>
-                <StarRating rating={venue.vibeScore / 2} size="sm" />
+                <div className="text-xs text-gray-400 font-medium mt-1">Google Rating</div>
+                <StarRating rating={venue.googleRating} size="sm" />
               </div>
             )}
             {venue.avgUserVibeScore != null && (

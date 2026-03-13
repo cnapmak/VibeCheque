@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { geocodeAddress } from "@/lib/geocode";
 
 const SORT_MAP: Record<string, Prisma.VenueOrderByWithRelationInput> = {
-  score: { vibeScore: "desc" },
+  google: { googleRating: "desc" },
   community: { avgUserVibeScore: "desc" },
   popular: { reviewCount: "desc" },
   newest: { createdAt: "desc" },

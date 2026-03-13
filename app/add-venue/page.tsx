@@ -247,7 +247,7 @@ export default function AddVenuePage() {
                 </span>
               </div>
               <p className="text-xs text-violet-500/80">
-                Claude will analyze the venue and assign a vibe category, score, and summary.
+                Claude will analyze the venue and assign a vibe category and atmospheric summary.
                 Requires ANTHROPIC_API_KEY.
               </p>
             </div>

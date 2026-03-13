@@ -29,8 +29,11 @@ model Venue {
   // AI Vibe Analysis
   vibeCategory  String?
   vibeSummary   String?
-  vibeScore     Float?
+  vibeScore     Float?   // kept for backwards compat, not shown in UI
   vibeAnalyzedAt DateTime?
+
+  // External ratings
+  googleRating  Float?
 
   // Aggregate stats
   avgUserVibeScore Float?

@@ -27,7 +27,7 @@ interface Venue {
   longitude?: number | null;
   vibeCategory?: string | null;
   vibeSummary?: string | null;
-  vibeScore?: number | null;
+  googleRating?: number | null;
   avgUserVibeScore?: number | null;
   reviewCount: number;
 }
@@ -40,7 +40,7 @@ const VENUE_TYPE_LABELS: Record<string, string> = {
 };
 const SORT_OPTIONS = [
   { value: "newest", label: "Newest" },
-  { value: "score", label: "AI Score" },
+  { value: "google", label: "Google Rating" },
   { value: "community", label: "Community" },
   { value: "popular", label: "Popular" },
 ];

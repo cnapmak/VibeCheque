@@ -27,7 +27,6 @@ export async function POST(
       data: {
         vibeCategory: analysis.vibeCategory,
         vibeSummary: analysis.vibeSummary,
-        vibeScore: analysis.vibeScore,
         vibeAnalyzedAt: new Date(),
       },
     });

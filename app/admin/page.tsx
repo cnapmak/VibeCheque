@@ -29,7 +29,7 @@ interface AdminVenue {
   neighborhood: string | null;
   city: string;
   vibeCategory: string | null;
-  vibeScore: number | null;
+  googleRating: number | null;
   avgUserVibeScore: number | null;
   reviewCount: number;
   createdAt: string;
@@ -320,10 +320,10 @@ export default function AdminPage() {
                             <span className="text-xs text-gray-400">
                               {venue.reviewCount} review{venue.reviewCount !== 1 ? "s" : ""}
                             </span>
-                            {venue.vibeScore != null && (
+                            {venue.googleRating != null && (
                               <span className="flex items-center gap-1 text-xs text-gray-400">
                                 <Star size={10} className="text-amber-400 fill-amber-400" />
-                                {venue.vibeScore.toFixed(1)} AI
+                                {venue.googleRating.toFixed(1)} Google
                               </span>
                             )}
                           </div>

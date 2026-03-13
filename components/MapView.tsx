@@ -14,7 +14,7 @@ interface MapVenue {
   latitude: number;
   longitude: number;
   vibeCategory?: string | null;
-  vibeScore?: number | null;
+  googleRating?: number | null;
   avgUserVibeScore?: number | null;
   reviewCount: number;
 }
@@ -55,7 +55,7 @@ export function MapView({ venues }: { venues: MapVenue[] }) {
     venues.forEach((venue) => {
       const vibe = venue.vibeCategory ? getVibeCategory(venue.vibeCategory) : null;
       const color = vibe?.mapColor ?? "#6d28d9";
-      const score = venue.avgUserVibeScore ?? venue.vibeScore;
+      const score = venue.avgUserVibeScore ?? venue.googleRating;
       const typeLabel = VENUE_TYPE_LABELS[venue.type] ?? venue.type;
 
       const icon = L.divIcon({

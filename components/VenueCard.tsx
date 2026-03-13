@@ -16,7 +16,7 @@ interface VenueCardProps {
     imageUrl?: string | null;
     vibeCategory?: string | null;
     vibeSummary?: string | null;
-    vibeScore?: number | null;
+    googleRating?: number | null;
     avgUserVibeScore?: number | null;
     reviewCount: number;
   };
@@ -39,7 +39,7 @@ export function VenueCard({ venue }: VenueCardProps) {
   const vibe = venue.vibeCategory ? getVibeCategory(venue.vibeCategory) : null;
   const isHot =
     (venue.avgUserVibeScore != null && venue.avgUserVibeScore >= 4) ||
-    (venue.vibeScore != null && venue.vibeScore >= 8);
+    (venue.googleRating != null && venue.googleRating >= 4.5);
   const dotColor = vibe?.accent ?? "#6366f1";
 
   return (
@@ -125,11 +125,11 @@ export function VenueCard({ venue }: VenueCardProps) {
 
           {/* Stats Footer */}
           <div className="flex items-center gap-4 text-xs text-gray-400 pt-3 border-t border-gray-100">
-            {venue.vibeScore != null && (
+            {venue.googleRating != null && (
               <div className="flex items-center gap-1">
                 <Star size={12} className="text-amber-400 fill-amber-400" />
-                <span className="font-semibold text-gray-700">{venue.vibeScore.toFixed(1)}</span>
-                <span>AI</span>
+                <span className="font-semibold text-gray-700">{venue.googleRating.toFixed(1)}</span>
+                <span>Google</span>
               </div>
             )}
             {venue.avgUserVibeScore != null && (
