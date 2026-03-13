@@ -74,6 +74,7 @@ export default function VenuePage() {
   const [loading, setLoading] = useState(true);
   const [analyzing, setAnalyzing] = useState(false);
   const [analyzeError, setAnalyzeError] = useState<string | null>(null);
+  const [lastGoogleReviewsUsed, setLastGoogleReviewsUsed] = useState<number | null>(null);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [similarVenues, setSimilarVenues] = useState<SimilarVenue[]>([]);
 
@@ -102,6 +103,7 @@ export default function VenuePage() {
       const res = await fetch(`/api/venues/${id}/analyze`, { method: "POST" });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Analysis failed");
+      setLastGoogleReviewsUsed(data.googleReviewsUsed ?? 0);
       await fetchVenue();
     } catch (err) {
       setAnalyzeError(err instanceof Error ? err.message : "Analysis failed");
@@ -257,6 +259,11 @@ export default function VenuePage() {
             {venue.vibeAnalyzedAt && (
               <p className="text-xs text-gray-300 mt-3">
                 Analyzed {new Date(venue.vibeAnalyzedAt).toLocaleDateString()}
+                {lastGoogleReviewsUsed != null && lastGoogleReviewsUsed > 0 && (
+                  <span className="ml-2 text-green-400">
+                    · grounded in {lastGoogleReviewsUsed} Google review{lastGoogleReviewsUsed !== 1 ? "s" : ""}
+                  </span>
+                )}
               </p>
             )}
           </div>

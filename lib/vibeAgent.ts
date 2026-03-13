@@ -1,4 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
+import type { GoogleReview } from "./googlePlaces";
 
 const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
@@ -7,7 +8,6 @@ const client = new Anthropic({
 export interface VibeAnalysisResult {
   vibeCategory: string;
   vibeSummary: string;
-  vibeScore: number;
   keyVibeWords: string[];
   musicVibe: string;
   crowdVibe: string;
@@ -31,44 +31,50 @@ export async function analyzeVenueVibe(
   venueName: string,
   venueWebsite: string | null,
   venueType: string,
-  venueAddress: string
+  venueAddress: string,
+  googleReviews: GoogleReview[] = []
 ): Promise<VibeAnalysisResult> {
   const websiteContext = venueWebsite
-    ? `The venue's website is: ${venueWebsite}`
+    ? `Website: ${venueWebsite}`
     : "No website provided.";
 
-  const prompt = `You are VibeCheque's AI vibe analyst. Your job is to analyze restaurants, bars, and venues and determine their vibe and atmosphere.
+  const reviewContext =
+    googleReviews.length > 0
+      ? `\nReal visitor reviews from Google (${googleReviews.length} reviews):\n` +
+        googleReviews
+          .map(
+            (r, i) =>
+              `[Review ${i + 1}] ${r.rating}/5 stars · ${r.relativeTime}\n"${r.text}"`
+          )
+          .join("\n\n") +
+        "\n\nBase your vibe analysis on what real visitors actually experienced. Quote or paraphrase specific details from their reviews in the summary."
+      : "\nNo Google reviews available — infer vibe from the venue name, type, and location.";
 
-Venue Details:
+  const prompt = `You are VibeCheque's AI vibe analyst. Analyze this venue's atmosphere and vibe based on real visitor feedback.
+
+Venue:
 - Name: ${venueName}
 - Type: ${venueType}
 - Address: ${venueAddress}
 - ${websiteContext}
+${reviewContext}
 
-Based on the venue name, type, location, and any context you can infer, analyze the likely vibe and atmosphere of this venue.
-
-You MUST respond with a valid JSON object in exactly this format:
+Respond with a valid JSON object in exactly this format:
 {
   "vibeCategory": "<one of: ${VIBE_CATEGORIES.join(", ")}>",
-  "vibeSummary": "<2-3 sentences describing the vibe and atmosphere in an engaging way, as if writing for a vibe-focused review site. Be specific and evocative.>",
-  "vibeScore": <number from 1-10 representing overall vibe intensity/strength>,
+  "vibeSummary": "<2-3 sentences capturing the atmosphere in vivid, specific terms. If reviews were provided, ground this in what visitors actually said — name specific details like lighting, noise level, crowd, service tone. Write like a knowledgeable local, not a press release.>",
   "keyVibeWords": ["<word1>", "<word2>", "<word3>", "<word4>", "<word5>"],
-  "musicVibe": "<brief description of likely music/sound environment>",
-  "crowdVibe": "<brief description of the typical crowd>",
-  "ambianceVibe": "<brief description of lighting, decor, and physical atmosphere>"
+  "musicVibe": "<brief description of the sound/music environment based on reviews or reasonable inference>",
+  "crowdVibe": "<who goes here and when, based on reviews>",
+  "ambianceVibe": "<lighting, decor, physical atmosphere — be specific>"
 }
 
-Be honest and realistic. Not every venue has a perfect vibe - some are dive bars, some are family joints. Capture the authentic character.`;
+Be honest. Capture authentic character, not marketing copy.`;
 
   const message = await client.messages.create({
-    model: "claude-opus-4-5",
+    model: "claude-sonnet-4-6",
     max_tokens: 1024,
-    messages: [
-      {
-        role: "user",
-        content: prompt,
-      },
-    ],
+    messages: [{ role: "user", content: prompt }],
   });
 
   const content = message.content[0];
@@ -76,7 +82,6 @@ Be honest and realistic. Not every venue has a perfect vibe - some are dive bars
     throw new Error("Unexpected response type from AI");
   }
 
-  // Extract JSON from response
   const jsonMatch = content.text.match(/\{[\s\S]*\}/);
   if (!jsonMatch) {
     throw new Error("Could not parse AI response as JSON");
@@ -84,13 +89,9 @@ Be honest and realistic. Not every venue has a perfect vibe - some are dive bars
 
   const result = JSON.parse(jsonMatch[0]) as VibeAnalysisResult;
 
-  // Validate category
   if (!VIBE_CATEGORIES.includes(result.vibeCategory)) {
     result.vibeCategory = "CASUAL_CHILL";
   }
-
-  // Clamp score
-  result.vibeScore = Math.max(1, Math.min(10, result.vibeScore));
 
   return result;
 }
