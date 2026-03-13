@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Trash2, Search, LogOut, ShieldCheck, Loader2, Star, MapPin } from "lucide-react";
+import { Trash2, Search, LogOut, ShieldCheck, Loader2, Star, MapPin, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { getVibeCategory } from "@/lib/vibeCategories";
 
@@ -61,6 +61,9 @@ export default function AdminPage() {
   const [venueSearch, setVenueSearch] = useState("");
   const [deletingVenueId, setDeletingVenueId] = useState<string | null>(null);
   const [confirmVenueId, setConfirmVenueId] = useState<string | null>(null);
+  const [syncing, setSyncing] = useState(false);
+  const [syncResult, setSyncResult] = useState<{ updated: number; notFound: number; errors: number } | null>(null);
+  const [syncError, setSyncError] = useState<string | null>(null);
 
   // Restore session
   useEffect(() => {
@@ -151,6 +154,31 @@ export default function AdminPage() {
       }
     } finally {
       setDeletingVenueId(null);
+    }
+  }
+
+  async function handleSyncGoogleRatings() {
+    if (!token) return;
+    setSyncing(true);
+    setSyncResult(null);
+    setSyncError(null);
+    try {
+      const res = await fetch("/api/admin/sync-google-ratings", {
+        method: "POST",
+        headers: { "x-admin-token": token },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setSyncError(data.error ?? "Sync failed");
+      } else {
+        setSyncResult({ updated: data.updated, notFound: data.notFound, errors: data.errors });
+        // Refresh the venues list with new ratings
+        fetchVenues();
+      }
+    } catch {
+      setSyncError("Network error during sync");
+    } finally {
+      setSyncing(false);
     }
   }
 
@@ -260,6 +288,28 @@ export default function AdminPage() {
         {/* ── Venues Tab ── */}
         {tab === "venues" && (
           <>
+            {/* Sync Google Ratings */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleSyncGoogleRatings}
+                  disabled={syncing}
+                  className="flex items-center gap-2 text-xs font-semibold bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded-xl transition-colors disabled:opacity-50"
+                >
+                  {syncing ? <Loader2 size={13} className="animate-spin" /> : <RefreshCw size={13} />}
+                  {syncing ? "Syncing…" : "Sync Google Ratings"}
+                </button>
+                {syncResult && (
+                  <span className="text-xs text-gray-500">
+                    ✓ {syncResult.updated} updated · {syncResult.notFound} not found{syncResult.errors > 0 ? ` · ${syncResult.errors} errors` : ""}
+                  </span>
+                )}
+                {syncError && (
+                  <span className="text-xs text-red-500 font-medium">{syncError}</span>
+                )}
+              </div>
+            </div>
+
             <div className="relative mb-4">
               <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
