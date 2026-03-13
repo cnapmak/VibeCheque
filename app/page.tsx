@@ -123,104 +123,64 @@ export default function HomePage() {
 
       {/* Filter Bar */}
       <section className="bg-white border-b border-gray-200 sticky top-[60px] z-40">
-        <div className="max-w-6xl mx-auto px-4 py-3 space-y-2">
-          {/* Vibe Category row */}
+        <div className="max-w-6xl mx-auto px-4 py-3">
           <div className="overflow-x-auto">
-            <div className="flex items-center gap-2 min-w-max">
+            <div className="flex items-center gap-1.5 min-w-max">
+              {/* Vibe pills — monotone */}
               <button
                 onClick={() => setSelectedCategory("")}
                 className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all whitespace-nowrap ${
                   selectedCategory === ""
                     ? "bg-gray-900 text-white"
-                    : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                    : "bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700"
                 }`}
               >
-                All
+                All Vibes
               </button>
               {Object.entries(VIBE_CATEGORIES).map(([key, cat]) => (
                 <button
                   key={key}
                   onClick={() => setSelectedCategory(selectedCategory === key ? "" : key)}
-                  className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all whitespace-nowrap border ${
+                  className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all whitespace-nowrap ${
                     selectedCategory === key
-                      ? "bg-gray-900 text-white border-gray-900"
-                      : `${cat.badgeClass} hover:opacity-80`
+                      ? "bg-gray-900 text-white"
+                      : "bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700"
                   }`}
                 >
-                  <span
-                    className="rounded-full flex-shrink-0"
-                    style={{
-                      width: 6,
-                      height: 6,
-                      background: selectedCategory === key ? "white" : cat.accent,
-                    }}
-                  />
                   {cat.label}
                 </button>
               ))}
-            </div>
-          </div>
 
-          {/* Neighborhood + Type row */}
-          <div className="overflow-x-auto">
-            <div className="flex items-center gap-4 min-w-max">
-              {/* Neighborhood pills */}
-              <div className="flex items-center gap-1.5">
-                <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mr-1">Area</span>
-                <button
-                  onClick={() => setSelectedNeighborhood("")}
-                  className={`px-3 py-1 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
-                    selectedNeighborhood === ""
-                      ? "bg-violet-100 text-violet-700"
-                      : "bg-gray-100 text-gray-500 hover:bg-gray-200"
-                  }`}
-                >
-                  All
-                </button>
+              {/* Divider */}
+              <div className="w-px h-4 bg-gray-200 flex-shrink-0 mx-1" />
+
+              {/* Area select */}
+              <select
+                value={selectedNeighborhood}
+                onChange={(e) => setSelectedNeighborhood(e.target.value)}
+                className={`text-xs font-semibold bg-gray-100 border-0 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-violet-300/50 cursor-pointer transition-all whitespace-nowrap ${
+                  selectedNeighborhood ? "bg-gray-900 text-white" : "text-gray-500"
+                }`}
+              >
+                <option value="">All Areas</option>
                 {NEIGHBORHOODS.map((n) => (
-                  <button
-                    key={n}
-                    onClick={() => setSelectedNeighborhood(selectedNeighborhood === n ? "" : n)}
-                    className={`px-3 py-1 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
-                      selectedNeighborhood === n
-                        ? "bg-violet-100 text-violet-700"
-                        : "bg-gray-100 text-gray-500 hover:bg-gray-200"
-                    }`}
-                  >
-                    {n}
-                  </button>
+                  <option key={n} value={n}>{n}</option>
                 ))}
-              </div>
+              </select>
 
-              <div className="w-px h-4 bg-gray-200 flex-shrink-0" />
-
-              {/* Type pills */}
-              <div className="flex items-center gap-1.5">
-                <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mr-1">Type</span>
-                <button
-                  onClick={() => setSelectedType("")}
-                  className={`px-3 py-1 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
-                    selectedType === ""
-                      ? "bg-violet-100 text-violet-700"
-                      : "bg-gray-100 text-gray-500 hover:bg-gray-200"
-                  }`}
-                >
-                  All
-                </button>
+              {/* Type select */}
+              <select
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value)}
+                className={`text-xs font-semibold bg-gray-100 border-0 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-violet-300/50 cursor-pointer transition-all whitespace-nowrap ${
+                  selectedType ? "bg-gray-900 text-white" : "text-gray-500"
+                }`}
+              >
+                <option value="">All Types</option>
                 {VENUE_TYPES.map((t) => (
-                  <button
-                    key={t}
-                    onClick={() => setSelectedType(selectedType === t ? "" : t)}
-                    className={`px-3 py-1 rounded-full text-xs font-semibold transition-all whitespace-nowrap ${
-                      selectedType === t
-                        ? "bg-violet-100 text-violet-700"
-                        : "bg-gray-100 text-gray-500 hover:bg-gray-200"
-                    }`}
-                  >
-                    {VENUE_TYPE_LABELS[t]}
-                  </button>
+                  <option key={t} value={t}>{VENUE_TYPE_LABELS[t]}</option>
                 ))}
-              </div>
+              </select>
             </div>
           </div>
         </div>

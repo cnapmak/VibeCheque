@@ -19,7 +19,7 @@ export function VibeBadge({ category, size = "md" }: VibeBadgeProps) {
 
   return (
     <span
-      className={`inline-flex items-center rounded-full font-medium border ${vibe.badgeClass} ${sizeClasses[size]}`}
+      className={`inline-flex items-center rounded-full font-medium border bg-gray-50 text-gray-600 border-gray-200 ${sizeClasses[size]}`}
     >
       <span
         className="rounded-full flex-shrink-0"
