@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { fetchGoogleRating } from "@/lib/googlePlaces";
+import { fetchGooglePlaceDetails } from "@/lib/googlePlaces";
 
 function isAuthorized(request: NextRequest): boolean {
   return request.headers.get("x-admin-token") === process.env.ADMIN_PASSWORD;
@@ -27,11 +27,18 @@ export async function POST(request: NextRequest) {
 
   for (const venue of venues) {
     try {
-      const place = await fetchGoogleRating(venue.name, venue.address, venue.city, venue.state);
+      const place = await fetchGooglePlaceDetails(
+        venue.name, venue.address, venue.city, venue.state
+      );
       if (place?.rating != null) {
         await prisma.venue.update({
           where: { id: venue.id },
-          data: { googleRating: place.rating },
+          data: {
+            googleRating: place.rating,
+            googlePlaceId: place.placeId,
+            googleReviewsCache: JSON.stringify(place.reviews),
+            googleReviewsCachedAt: new Date(),
+          },
         });
         results.push({ name: venue.name, rating: place.rating, status: "updated" });
       } else {
@@ -41,7 +48,6 @@ export async function POST(request: NextRequest) {
       results.push({ name: venue.name, rating: null, status: `error: ${err instanceof Error ? err.message : String(err)}` });
     }
 
-    // Stay well within Google's 10 QPS limit
     await new Promise((r) => setTimeout(r, 150));
   }
 

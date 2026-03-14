@@ -22,7 +22,12 @@ export async function GET(
     return NextResponse.json({ error: "Venue not found" }, { status: 404 });
   }
 
-  return NextResponse.json(venue);
+  // Parse cached Google reviews from JSON string
+  const googleReviews = venue.googleReviewsCache
+    ? JSON.parse(venue.googleReviewsCache)
+    : [];
+
+  return NextResponse.json({ ...venue, googleReviews });
 }
 
 export async function DELETE(

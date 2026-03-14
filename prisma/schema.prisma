@@ -32,8 +32,11 @@ model Venue {
   vibeScore     Float?   // kept for backwards compat, not shown in UI
   vibeAnalyzedAt DateTime?
 
-  // External ratings
-  googleRating  Float?
+  // External ratings + cached reviews
+  googleRating        Float?
+  googlePlaceId       String?
+  googleReviewsCache  String?   // JSON array of up to 5 reviews
+  googleReviewsCachedAt DateTime?
 
   // Aggregate stats
   avgUserVibeScore Float?

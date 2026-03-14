@@ -42,8 +42,13 @@ export async function POST(
         vibeCategory: analysis.vibeCategory,
         vibeSummary: analysis.vibeSummary,
         vibeAnalyzedAt: new Date(),
-        // Update Google rating if we fetched a fresh one
+        // Update Google data if we fetched fresh results
         ...(googleData?.rating != null && { googleRating: googleData.rating }),
+        ...(googleData?.placeId && { googlePlaceId: googleData.placeId }),
+        ...(googleData?.reviews && {
+          googleReviewsCache: JSON.stringify(googleData.reviews),
+          googleReviewsCachedAt: new Date(),
+        }),
       },
     });
 
