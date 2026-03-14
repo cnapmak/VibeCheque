@@ -1,4 +1,4 @@
-const PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
+const PLACES_V1 = "https://places.googleapis.com/v1/places";
 
 export interface GoogleReview {
   authorName: string;
@@ -15,15 +15,23 @@ export interface GooglePlaceDetails {
   reviews: GoogleReview[];
 }
 
-function hasApiKey(): boolean {
+function apiKey(): string | null {
   const key = process.env.GOOGLE_PLACES_API_KEY;
-  return !!key && key !== "your-google-places-api-key-here";
+  return key && key !== "your-google-places-api-key-here" ? key : null;
+}
+
+function placesHeaders(fieldMask: string, key: string): HeadersInit {
+  return {
+    "Content-Type": "application/json",
+    "X-Goog-Api-Key": key,
+    "X-Goog-FieldMask": fieldMask,
+  };
 }
 
 /**
- * Fetch a venue's Google rating + up to 5 reviews.
- * Step 1: Text Search → place_id + rating
- * Step 2: Place Details → review text
+ * Full fetch: rating + up to 5 review texts.
+ * Step 1 — Text Search (New) → place id + rating
+ * Step 2 — Place Details (New) → reviews
  */
 export async function fetchGooglePlaceDetails(
   venueName: string,
@@ -31,54 +39,60 @@ export async function fetchGooglePlaceDetails(
   city: string,
   state: string
 ): Promise<GooglePlaceDetails | null> {
-  if (!hasApiKey()) return null;
+  const key = apiKey();
+  if (!key) return null;
 
-  const apiKey = process.env.GOOGLE_PLACES_API_KEY!;
-  const query = `${venueName} ${address} ${city} ${state}`;
+  // Step 1 — Text Search
+  const searchRes = await fetch(`${PLACES_V1}:searchText`, {
+    method: "POST",
+    headers: placesHeaders("places.id,places.displayName,places.rating,places.userRatingCount", key),
+    body: JSON.stringify({ textQuery: `${venueName} ${address} ${city} ${state}` }),
+  });
 
-  // Step 1 — Text Search to get the place_id and basic rating
-  const searchUrl = `${PLACES_API_BASE}/textsearch/json?query=${encodeURIComponent(query)}&key=${apiKey}`;
-  const searchRes = await fetch(searchUrl);
-  if (!searchRes.ok) throw new Error(`Text Search HTTP ${searchRes.status}`);
-
+  if (!searchRes.ok) throw new Error(`Places Text Search HTTP ${searchRes.status}`);
   const searchData = await searchRes.json();
-  if (searchData.status === "REQUEST_DENIED") {
-    throw new Error(`Google Places: ${searchData.error_message ?? "request denied"}`);
-  }
-  if (!searchData.results?.length) return null;
 
-  const topResult = searchData.results[0];
-  const placeId: string = topResult.place_id;
+  const topPlace = searchData.places?.[0];
+  if (!topPlace) return null;
 
-  // Step 2 — Place Details to get review text
-  const detailsUrl = `${PLACES_API_BASE}/details/json?place_id=${placeId}&fields=name,rating,user_ratings_total,reviews&key=${apiKey}`;
-  const detailsRes = await fetch(detailsUrl);
-  if (!detailsRes.ok) throw new Error(`Place Details HTTP ${detailsRes.status}`);
+  const placeId: string = topPlace.id;
 
-  const detailsData = await detailsRes.json();
-  const place = detailsData.result;
+  // Step 2 — Place Details for review text
+  const detailsRes = await fetch(`${PLACES_V1}/${placeId}`, {
+    headers: placesHeaders(
+      "id,displayName,rating,userRatingCount,reviews",
+      key
+    ),
+  });
 
-  const reviews: GoogleReview[] = (place?.reviews ?? [])
-    .filter((r: { text?: string }) => r.text?.trim())
-    .map((r: { author_name: string; rating: number; text: string; relative_time_description: string }) => ({
-      authorName: r.author_name,
-      rating: r.rating,
-      text: r.text.trim(),
-      relativeTime: r.relative_time_description,
+  if (!detailsRes.ok) throw new Error(`Places Details HTTP ${detailsRes.status}`);
+  const place = await detailsRes.json();
+
+  const reviews: GoogleReview[] = (place.reviews ?? [])
+    .filter((r: { text?: { text?: string } }) => r.text?.text?.trim())
+    .map((r: {
+      authorAttribution?: { displayName?: string };
+      rating?: number;
+      text?: { text?: string };
+      relativePublishTimeDescription?: string;
+    }) => ({
+      authorName: r.authorAttribution?.displayName ?? "Anonymous",
+      rating: r.rating ?? 0,
+      text: r.text?.text?.trim() ?? "",
+      relativeTime: r.relativePublishTimeDescription ?? "",
     }));
 
   return {
     placeId,
-    name: place?.name ?? topResult.name,
-    rating: place?.rating ?? topResult.rating ?? null,
-    userRatingsTotal: place?.user_ratings_total ?? topResult.user_ratings_total ?? null,
+    name: place.displayName?.text ?? topPlace.displayName?.text ?? venueName,
+    rating: place.rating ?? topPlace.rating ?? null,
+    userRatingsTotal: place.userRatingCount ?? topPlace.userRatingCount ?? null,
     reviews,
   };
 }
 
 /**
- * Lightweight version — just fetches the average rating (no review text).
- * Used by the admin sync script.
+ * Lightweight: rating only (used by admin sync script).
  */
 export async function fetchGoogleRating(
   venueName: string,
@@ -86,25 +100,24 @@ export async function fetchGoogleRating(
   city: string,
   state: string
 ): Promise<{ rating: number | null; userRatingsTotal: number | null; placeId: string } | null> {
-  if (!hasApiKey()) return null;
+  const key = apiKey();
+  if (!key) return null;
 
-  const apiKey = process.env.GOOGLE_PLACES_API_KEY!;
-  const query = `${venueName} ${address} ${city} ${state}`;
-  const url = `${PLACES_API_BASE}/textsearch/json?query=${encodeURIComponent(query)}&key=${apiKey}`;
+  const res = await fetch(`${PLACES_V1}:searchText`, {
+    method: "POST",
+    headers: placesHeaders("places.id,places.rating,places.userRatingCount", key),
+    body: JSON.stringify({ textQuery: `${venueName} ${address} ${city} ${state}` }),
+  });
 
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Google Places API error: ${res.status}`);
-
+  if (!res.ok) throw new Error(`Places Text Search HTTP ${res.status}`);
   const data = await res.json();
-  if (data.status === "REQUEST_DENIED") {
-    throw new Error(`Google Places: ${data.error_message ?? "request denied"}`);
-  }
-  if (!data.results?.length) return null;
 
-  const top = data.results[0];
+  const top = data.places?.[0];
+  if (!top) return null;
+
   return {
     rating: top.rating ?? null,
-    userRatingsTotal: top.user_ratings_total ?? null,
-    placeId: top.place_id,
+    userRatingsTotal: top.userRatingCount ?? null,
+    placeId: top.id,
   };
 }
